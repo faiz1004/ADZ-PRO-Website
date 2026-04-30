@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useState, useEffect } from 'react';
@@ -7,6 +8,7 @@ import { Menu, X, Rocket } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,7 +34,7 @@ export function Navbar() {
   return (
     <nav className={cn(
       "fixed top-0 left-0 right-0 z-[100] transition-all duration-500",
-      isScrolled ? "py-3 bg-background/70 backdrop-blur-xl border-b border-white/5 shadow-2xl" : "py-6 bg-transparent"
+      isScrolled ? "py-3 bg-background/70 backdrop-blur-xl border-b border-foreground/5 shadow-2xl" : "py-6 bg-transparent"
     )}>
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
@@ -42,35 +44,41 @@ export function Navbar() {
           >
             <Rocket className="text-white w-5 h-5" />
           </motion.div>
-          <span className="text-2xl font-black tracking-tighter text-white">ADZ PRO</span>
+          <span className="text-2xl font-black tracking-tighter text-foreground">ADZ PRO</span>
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-10">
+        <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <Link 
               key={link.name} 
               href={link.href}
               className={cn(
-                "text-sm font-bold transition-all duration-300 hover:text-white uppercase tracking-wider",
-                pathname === link.href ? "active-nav-link" : "text-white/60"
+                "text-sm font-bold transition-all duration-300 hover:text-primary uppercase tracking-wider",
+                pathname === link.href ? "active-nav-link" : "text-foreground/60"
               )}
             >
               {link.name}
             </Link>
           ))}
-          <Button asChild className="rounded-full px-8 font-bold bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20">
-            <Link href="/contact">Free Audit</Link>
-          </Button>
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+            <Button asChild className="rounded-full px-8 font-bold bg-primary text-white hover:bg-primary/90 shadow-xl shadow-primary/20">
+              <Link href="/contact">Free Audit</Link>
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Toggle */}
-        <button 
-          className="md:hidden text-white p-2"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+        <div className="md:hidden flex items-center gap-4">
+          <ThemeToggle />
+          <button 
+            className="text-foreground p-2"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Drawer */}
@@ -98,7 +106,7 @@ export function Navbar() {
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
                     "text-4xl font-black transition-colors uppercase tracking-tight",
-                    pathname === link.href ? "text-primary" : "text-white/40"
+                    pathname === link.href ? "text-primary" : "text-foreground/40"
                   )}
                 >
                   {link.name}
@@ -111,8 +119,8 @@ export function Navbar() {
                 <Link href="/contact">Get Started</Link>
               </Button>
               <div className="flex justify-center gap-6 py-4">
-                <span className="text-white/40 text-sm">Follow us</span>
-                <div className="h-px flex-1 bg-white/10 mt-2.5" />
+                <span className="text-foreground/40 text-sm">Follow us</span>
+                <div className="h-px flex-1 bg-foreground/10 mt-2.5" />
               </div>
             </div>
           </motion.div>

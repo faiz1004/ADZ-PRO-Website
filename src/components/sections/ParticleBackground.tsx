@@ -1,10 +1,10 @@
+
 "use client"
 
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 export default function ParticleBackground() {
-  // Use a seeded approach for the initial render, but safe since it's client-only
   const particles = useMemo(() => {
     return Array.from({ length: 30 }, (_, i) => ({
       id: i,
@@ -17,7 +17,7 @@ export default function ParticleBackground() {
   }, []);
 
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
+    <div className="absolute inset-0 z-0 pointer-events-none opacity-20 dark:opacity-40">
       {particles.map((p) => (
         <motion.div
           key={p.id}
@@ -31,7 +31,7 @@ export default function ParticleBackground() {
             repeat: Infinity, 
             ease: "linear" 
           }}
-          className="absolute w-1 h-1 bg-white rounded-full blur-[1px]"
+          className="absolute w-1.5 h-1.5 bg-foreground rounded-full blur-[1px]"
         />
       ))}
     </div>

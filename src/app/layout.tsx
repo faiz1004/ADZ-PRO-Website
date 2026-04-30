@@ -1,9 +1,11 @@
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { FloatingElements } from '@/components/layout/FloatingElements';
+import { ThemeProvider } from '@/components/theme-provider';
 
 export const metadata: Metadata = {
   title: 'Adz Pro | Leading Advertising Agency in New Delhi',
@@ -80,7 +82,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -90,14 +92,21 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="font-body antialiased bg-background text-white">
-        <Navbar />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
-        <FloatingElements />
-        <Toaster />
+      <body className="font-body antialiased bg-background text-foreground transition-colors duration-300">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer />
+          <FloatingElements />
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

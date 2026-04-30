@@ -1,29 +1,52 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 211 20% 15%;
-    --foreground: 0 0% 100%;
-    --card: 211 25% 18%;
-    --card-foreground: 0 0% 100%;
-    --popover: 211 20% 12%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 211 100% 50%;
+    --background: 0 0% 100%;
+    --foreground: 211 50% 10%;
+    --card: 0 0% 98%;
+    --card-foreground: 211 50% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 211 50% 10%;
+    --primary: 197 71% 41%; /* #1E8BB5 derived from logo */
     --primary-foreground: 0 0% 100%;
-    --secondary: 211 15% 25%;
+    --secondary: 211 10% 95%;
+    --secondary-foreground: 211 50% 10%;
+    --muted: 211 10% 95%;
+    --muted-foreground: 211 10% 40%;
+    --accent: 173 83% 45%;
+    --accent-foreground: 211 50% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 211 15% 90%;
+    --input: 211 15% 90%;
+    --ring: 197 71% 41%;
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 211 20% 10%;
+    --foreground: 0 0% 100%;
+    --card: 211 25% 12%;
+    --card-foreground: 0 0% 100%;
+    --popover: 211 20% 8%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 197 71% 41%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 211 15% 20%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 211 10% 25%;
+    --muted: 211 10% 20%;
     --muted-foreground: 211 10% 70%;
     --accent: 173 83% 60%;
     --accent-foreground: 211 20% 10%;
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 211 15% 25%;
-    --input: 211 15% 25%;
-    --ring: 211 100% 50%;
-    --radius: 1rem;
+    --border: 211 15% 20%;
+    --input: 211 15% 20%;
+    --ring: 197 71% 41%;
   }
 }
 
@@ -37,7 +60,7 @@
 }
 
 .glassmorphism {
-  @apply bg-white/5 backdrop-blur-md border border-white/10;
+  @apply bg-background/50 backdrop-blur-md border border-foreground/10;
 }
 
 .text-gradient {
@@ -62,21 +85,20 @@
 }
 
 .mesh-gradient {
-  background-color: hsla(211, 20%, 15%, 1);
+  background-color: hsl(var(--background));
   background-image: 
-    radial-gradient(at 0% 0%, hsla(211, 100%, 50%, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, hsla(173, 83%, 60%, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, hsla(211, 100%, 50%, 0.1) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, hsla(173, 83%, 60%, 0.1) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, hsla(197, 71%, 41%, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(173, 83%, 60%, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(197, 71%, 41%, 0.05) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(173, 83%, 60%, 0.05) 0px, transparent 50%);
 }
 
-/* Custom transitions */
 .page-transition {
   @apply animate-in fade-in slide-in-from-bottom-4 duration-700;
 }
 
 .hover-glow:hover {
-  box-shadow: 0 0 20px hsla(211, 100%, 50%, 0.3);
+  box-shadow: 0 0 20px hsla(197, 71%, 41%, 0.2);
 }
 
 .active-nav-link {

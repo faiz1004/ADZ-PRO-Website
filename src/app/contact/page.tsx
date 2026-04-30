@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, MapPin, Phone, Send, Linkedin, Facebook, Loader2, CheckCircle, MessageCircle, ArrowRight, ExternalLink } from 'lucide-react';
+import { Mail, MapPin, Send, MessageCircle, ExternalLink, CheckCircle, Loader2, Clock, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { db } from '@/app/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { cn } from '@/lib/utils';
 
 export default function ContactPage() {
   const { toast } = useToast();
@@ -69,14 +70,19 @@ export default function ContactPage() {
                <a href="mailto:operation@adzpro.co.in">Schedule Free Audit <ExternalLink size={20} className="ml-2" /></a>
              </Button>
              <Button asChild variant="outline" size="lg" className="rounded-full h-16 px-10 text-lg font-black glassmorphism border-[#25D366]/20 text-[#25D366] hover:bg-[#25D366]/10">
-               <a href="https://wa.me/91XXXXXXXXXX" target="_blank" rel="noopener noreferrer">WhatsApp Strategy <MessageCircle size={20} className="ml-2" /></a>
+               <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer">WhatsApp Strategy <MessageCircle size={20} className="ml-2" /></a>
              </Button>
+           </div>
+           
+           <div className="inline-flex items-center gap-2 px-6 py-3 glassmorphism rounded-full border-accent/20">
+              <Zap size={16} className="text-accent animate-pulse" />
+              <span className="text-sm font-black uppercase tracking-widest text-accent">Average response time: Under 2 hours</span>
            </div>
         </div>
 
         <div className="grid lg:grid-cols-12 gap-20 items-start">
           {/* Info Side */}
-          <div className="lg:col-span-5 space-y-16">
+          <div className="lg:col-span-5 space-y-12">
             <div className="space-y-8">
               <h3 className="text-4xl font-black uppercase tracking-tighter">New Delhi Headquarters</h3>
               <div className="space-y-8">
@@ -98,15 +104,30 @@ export default function ContactPage() {
                     <a href="mailto:operation@adzpro.co.in" className="text-xl font-bold hover:text-primary transition-colors">operation@adzpro.co.in</a>
                   </div>
                 </div>
+                <div className="flex items-start gap-6 group cursor-default">
+                  <div className="w-14 h-14 rounded-2xl glassmorphism flex items-center justify-center shrink-0 group-hover:bg-primary transition-colors duration-500">
+                    <Clock size={28} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-black text-white/20 uppercase tracking-widest mb-1">Office Hours</p>
+                    <p className="text-lg font-bold leading-snug">Mon–Sat: 9:00 AM – 7:00 PM IST</p>
+                    <p className="text-sm text-white/40">Sun: By appointment only</p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Map Placeholder */}
-            <div className="relative rounded-[40px] overflow-hidden glassmorphism h-[300px] border-white/5 shadow-2xl group">
-               <div className="absolute inset-0 bg-primary/10 flex items-center justify-center">
-                  <p className="text-white/20 font-black uppercase tracking-widest text-center px-12">Interactive Map Loading...</p>
-               </div>
-               <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+            {/* Google Map Embed */}
+            <div className="relative rounded-[40px] overflow-hidden glassmorphism h-[350px] border-white/5 shadow-2xl group">
+               <iframe 
+                src="https://maps.google.com/maps?q=Bijwasan+New+Delhi&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)' }}
+                allowFullScreen={true}
+                loading="lazy"
+               />
+               <div className="absolute inset-0 pointer-events-none border-[20px] border-background/20" />
             </div>
           </div>
 

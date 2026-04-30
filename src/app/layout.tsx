@@ -9,13 +9,24 @@ export const metadata: Metadata = {
   title: 'Adz Pro | Leading Advertising Agency in New Delhi',
   description: 'Adz Pro is a premier digital marketing and advertising agency in Bijwasan, New Delhi. Expert solutions for scaling your brand through creative strategy and performance advertising.',
   keywords: ['Adz Pro New Delhi', 'Advertising Agency in Bijwasan', 'Digital Marketing Expert Adz Pro', 'Adz Pro Digital'],
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
+    shortcut: '/favicon.ico',
+  },
+  manifest: '/site.webmanifest',
   openGraph: {
-    title: 'Adz Pro | Digital Marketing Excellence',
-    description: 'Scaling brands through creative strategy and performance advertising in New Delhi.',
+    title: 'Adz Pro | Leading Advertising Agency in New Delhi',
+    description: 'Creative precision meets data-driven growth.',
     url: 'https://adzpro.co.in',
     siteName: 'Adz Pro Digital',
     locale: 'en_IN',
     type: 'website',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',

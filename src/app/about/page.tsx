@@ -3,10 +3,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { Target, Eye, Sparkles, Award, Check, X } from 'lucide-react';
+import { Award, Check, X, Target, Heart, Lightbulb, BarChart } from 'lucide-react';
 
 export default function AboutPage() {
   const aboutImg = PlaceHolderImages.find(img => img.id === 'about-image');
@@ -18,13 +16,11 @@ export default function AboutPage() {
     { year: "Today", event: "Growing Faster...", desc: "Continuously innovating the future of digital ads." },
   ];
 
-  const comparison = [
-    { point: "Data-Driven Decisions", us: true, traditional: false },
-    { point: "Real-time ROI Tracking", us: true, traditional: false },
-    { point: "High-Tech Creative Production", us: true, traditional: true },
-    { point: "Opaque Monthly Fees", us: false, traditional: true },
-    { point: "Full Funnel Strategy", us: true, traditional: false },
-    { point: "Bureaucratic Delays", us: false, traditional: true },
+  const values = [
+    { title: "Precision First", desc: "Every rupee spent is tracked and justified.", icon: <Target className="text-primary" /> },
+    { title: "Client Obsessed", desc: "Your growth IS our growth.", icon: <Heart className="text-primary" /> },
+    { title: "Always Innovating", desc: "We stay ahead of every algorithm change.", icon: <Lightbulb className="text-primary" /> },
+    { title: "Transparent Always", desc: "No vanity metrics. Only real results.", icon: <BarChart className="text-primary" /> },
   ];
 
   return (
@@ -62,10 +58,50 @@ export default function AboutPage() {
           </div>
         </div>
 
+        {/* Numbers Section */}
+        <div className="py-24 grid grid-cols-2 md:grid-cols-4 gap-8 mb-32">
+          {[
+            { value: "500+", label: "Campaigns Launched" },
+            { value: "₹2Cr+", label: "Ad Budget Managed" },
+            { value: "98%", label: "Client Satisfaction" },
+            { value: "12+", label: "Industries Served" },
+          ].map((stat, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="p-10 rounded-[40px] glassmorphism text-center space-y-2 border-white/5"
+            >
+              <h3 className="text-5xl font-black text-primary">{stat.value}</h3>
+              <p className="text-sm font-black text-white/40 uppercase tracking-widest">{stat.label}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Values Grid */}
+        <div className="py-32 bg-white/5 rounded-[80px] px-12 mb-32">
+          <div className="text-center mb-20 space-y-4">
+            <h2 className="text-sm font-black text-primary uppercase tracking-[0.4em]">Core Values</h2>
+            <h3 className="text-4xl font-black">Built on Principles.</h3>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {values.map((v, i) => (
+              <div key={i} className="p-10 rounded-[40px] glassmorphism border-white/5 space-y-6 group hover:border-primary/50 transition-all">
+                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                  {v.icon}
+                </div>
+                <h4 className="text-2xl font-black uppercase">{v.title}</h4>
+                <p className="text-white/60 leading-relaxed">{v.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Timeline */}
         <div className="py-24 space-y-16">
           <div className="text-center">
-             <h2 className="text-sm font-black text-primary uppercase tracking-[0.4em] mb-4">The Journey</h2>
+             <h2 className="text-sm font-black text-primary uppercase tracking-[0.4em]">The Journey</h2>
              <h3 className="text-4xl font-black">Scaling Milestone by Milestone</h3>
           </div>
           <div className="relative max-w-4xl mx-auto">
@@ -102,71 +138,6 @@ export default function AboutPage() {
               ))}
             </div>
           </div>
-        </div>
-
-        {/* Comparison Section */}
-        <div className="py-32">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-sm font-black text-primary uppercase tracking-[0.4em]">Why Us?</h2>
-            <h3 className="text-4xl font-black">The Performance Advantage</h3>
-          </div>
-          <div className="max-w-4xl mx-auto glassmorphism rounded-[40px] overflow-hidden shadow-2xl border-white/5">
-            <table className="w-full text-left">
-              <thead className="bg-white/5 border-b border-white/5">
-                <tr>
-                  <th className="p-8 text-xs font-black uppercase tracking-widest text-white/40">Efficiency Point</th>
-                  <th className="p-8 text-center text-primary font-black uppercase tracking-widest">Adz Pro</th>
-                  <th className="p-8 text-center text-white/20 font-black uppercase tracking-widest">Traditional</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {comparison.map((row, i) => (
-                  <tr key={i} className="hover:bg-white/5 transition-colors">
-                    <td className="p-8 font-bold text-white/80">{row.point}</td>
-                    <td className="p-8 text-center">
-                      <div className="flex justify-center">
-                        {row.us ? <Check className="text-accent" /> : <X className="text-white/20" />}
-                      </div>
-                    </td>
-                    <td className="p-8 text-center">
-                      <div className="flex justify-center">
-                        {row.traditional ? <Check className="text-white/40" /> : <X className="text-white/20" />}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Founder Section */}
-        <div className="py-24">
-           <div className="grid md:grid-cols-2 gap-20 items-center max-w-5xl mx-auto">
-             <div className="relative group">
-               <div className="absolute inset-0 bg-accent/20 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-               <div className="relative glassmorphism p-4 rounded-[40px] border-white/10 shadow-2xl">
-                  <div className="aspect-[4/5] rounded-[32px] bg-white/5 flex items-center justify-center">
-                    <Users size={64} className="text-white/10" />
-                  </div>
-                  <div className="absolute -bottom-6 -right-6 glassmorphism p-6 rounded-3xl shadow-xl">
-                    <h4 className="font-black text-white">Founder</h4>
-                    <p className="text-xs font-bold text-primary uppercase">Growth Strategist</p>
-                  </div>
-               </div>
-             </div>
-             <div className="space-y-8">
-                <h3 className="text-4xl font-black">Driven by Results.</h3>
-                <p className="text-lg text-white/60 leading-relaxed italic">
-                  "Our philosophy is simple: results are the only metric that matters, but creativity is the only way to get them. We don't just manage budgets; we grow empires."
-                </p>
-                <div className="h-px w-20 bg-primary" />
-                <div className="space-y-2">
-                  <p className="font-bold text-white">Team Adz Pro</p>
-                  <p className="text-sm text-white/40 uppercase tracking-widest font-black">Est. New Delhi 2025</p>
-                </div>
-             </div>
-           </div>
         </div>
       </div>
     </div>

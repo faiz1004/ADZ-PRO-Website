@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { TrendingUp, ShieldCheck, Palette, Globe, ArrowRight, CheckCircle2, BarChart3, Target } from 'lucide-react';
+import { TrendingUp, ShieldCheck, Palette, Globe, ArrowRight, CheckCircle2, BarChart3, Target, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -13,36 +13,40 @@ export default function ServicesPage() {
     {
       title: "Performance Advertising",
       focus: "ROI & Scaling",
-      metric: "Average 3.2x ROAS for clients",
+      metric: "Average 3.2x ROAS within 90 days",
       desc: "Our primary engine. We don't just run ads; we engineer high-performance sales funnels. Using multi-channel attribution and real-time optimization, we ensure every cent of your ad spend is working toward a conversion.",
       process: ["Market Gap Analysis", "Omnichannel Launch", "Iterative Scaling"],
+      included: ["Meta Ads", "Google Ads", "YouTube Ads", "Retargeting", "A/B Testing", "Funnel Optimization"],
       icon: <TrendingUp size={32} />,
       color: "text-primary"
     },
     {
       title: "Brand Strategy",
       focus: "Identity & Positioning",
-      metric: "127% Increase in Brand Recall",
+      metric: "73% report stronger brand recall",
       desc: "How does the world see you? We define your brand's voice, visual DNA, and market positioning to ensure you're not just a commodity, but a cult favorite.",
       process: ["Visual DNA Mapping", "Voice Guidelines", "Market Positioning"],
+      included: ["Brand Audit", "Positioning Framework", "Visual Identity", "Tone of Voice", "Competitor Analysis"],
       icon: <Target size={32} />,
       color: "text-accent"
     },
     {
       title: "Creative Content",
       focus: "High-Impact Visuals",
-      metric: "5M+ Views Generated Monthly",
+      metric: "2.8x higher CTR vs Previous",
       desc: "In the attention economy, your creative is your most valuable asset. We produce high-impact video, graphic, and copy assets designed specifically to stop the scroll.",
       process: ["Concept Ideation", "High-Tech Production", "Post-Launch Audit"],
+      included: ["Ad Copywriting", "Video Scripts", "Graphic Design", "UGC Direction", "Reels & Shorts Production"],
       icon: <Palette size={32} />,
       color: "text-primary"
     },
     {
       title: "Digital Growth",
       focus: "Holistic SEO & Social",
-      metric: "Top 3 Ranking for Core Terms",
+      metric: "5x organic growth in 6 months",
       desc: "Organic growth is the backbone of brand longevity. We implement deep-technical SEO and community-led social strategies that drive evergreen traffic.",
       process: ["Technical SEO Audit", "Content Hub Strategy", "Community Scaling"],
+      included: ["SEO Audit", "On-Page Optimization", "Link Building", "Social Media Calendar", "Community Management"],
       icon: <Globe size={32} />,
       color: "text-accent"
     }
@@ -72,9 +76,7 @@ export default function ServicesPage() {
           </p>
         </div>
 
-        {/* Tabbed Interface */}
         <div className="grid lg:grid-cols-12 gap-12 min-h-[600px]">
-          {/* Tabs List */}
           <div className="lg:col-span-4 flex flex-col gap-4">
             {services.map((service, i) => (
               <button
@@ -97,7 +99,6 @@ export default function ServicesPage() {
             ))}
           </div>
 
-          {/* Content Area */}
           <div className="lg:col-span-8 relative">
             <AnimatePresence mode="wait">
               <motion.div
@@ -106,12 +107,12 @@ export default function ServicesPage() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                className="glassmorphism p-12 md:p-20 rounded-[40px] border-white/5 h-full flex flex-col justify-center space-y-10"
+                className="glassmorphism p-12 md:p-20 rounded-[40px] border-white/5 h-full flex flex-col justify-center space-y-12"
               >
                 <div className="space-y-6">
                   <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary text-xs font-black uppercase tracking-widest">
                     <BarChart3 size={16} />
-                    {services[activeTab].metric}
+                    Typical Result: {services[activeTab].metric}
                   </div>
                   <h3 className="text-5xl md:text-6xl font-black">{services[activeTab].title}</h3>
                   <p className="text-xl text-white/60 leading-relaxed">
@@ -119,15 +120,28 @@ export default function ServicesPage() {
                   </p>
                 </div>
 
-                <div className="space-y-6">
-                  <h4 className="text-xs font-black text-white/20 uppercase tracking-[0.4em]">Our Process</h4>
-                  <div className="flex flex-col md:flex-row gap-4">
-                    {services[activeTab].process.map((step, sidx) => (
-                      <div key={sidx} className="flex-1 p-6 rounded-2xl bg-white/5 border border-white/5 flex flex-col gap-4">
-                        <span className="text-xs font-black text-primary uppercase">Step 0{sidx + 1}</span>
-                        <p className="font-bold text-white/90">{step}</p>
-                      </div>
-                    ))}
+                <div className="grid md:grid-cols-2 gap-12">
+                  <div className="space-y-6">
+                    <h4 className="text-xs font-black text-white/20 uppercase tracking-[0.4em]">What's Included</h4>
+                    <ul className="space-y-3">
+                      {services[activeTab].included.map((item, idx) => (
+                        <li key={idx} className="flex items-center gap-3 text-white/80">
+                          <CheckCircle size={18} className="text-accent" />
+                          <span className="font-medium">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="space-y-6">
+                    <h4 className="text-xs font-black text-white/20 uppercase tracking-[0.4em]">Our Process</h4>
+                    <div className="space-y-4">
+                      {services[activeTab].process.map((step, sidx) => (
+                        <div key={sidx} className="p-6 rounded-2xl bg-white/5 border border-white/5 flex items-center gap-4">
+                          <span className="text-xs font-black text-primary uppercase">0{sidx + 1}</span>
+                          <p className="font-bold text-white/90">{step}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 

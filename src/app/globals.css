@@ -14,7 +14,7 @@
     --primary-foreground: 0 0% 100%;
     --secondary: 211 15% 25%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 211 15% 25%;
+    --muted: 211 10% 25%;
     --muted-foreground: 211 10% 70%;
     --accent: 173 83% 60%;
     --accent-foreground: 211 20% 10%;
@@ -23,7 +23,7 @@
     --border: 211 15% 25%;
     --input: 211 15% 25%;
     --ring: 211 100% 50%;
-    --radius: 0.75rem;
+    --radius: 1rem;
   }
 }
 
@@ -41,15 +41,44 @@
 }
 
 .text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_auto] animate-shimmer;
 }
 
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+@keyframes shimmer {
+  to { background-position: 200% center; }
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+.animate-shimmer {
+  animation: shimmer 5s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.mesh-gradient {
+  background-color: hsla(211, 20%, 15%, 1);
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(211, 100%, 50%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(173, 83%, 60%, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(211, 100%, 50%, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(173, 83%, 60%, 0.1) 0px, transparent 50%);
+}
+
+/* Custom transitions */
+.page-transition {
+  @apply animate-in fade-in slide-in-from-bottom-4 duration-700;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px hsla(211, 100%, 50%, 0.3);
+}
+
+.active-nav-link {
+  @apply text-primary relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary after:rounded-full after:animate-in after:slide-in-from-left-2;
 }

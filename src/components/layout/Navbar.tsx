@@ -1,4 +1,3 @@
-
 "use client"
 
 import React, { useState, useEffect } from 'react';
@@ -7,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Menu, X, Rocket } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -15,7 +15,7 @@ export function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -31,33 +31,36 @@ export function Navbar() {
 
   return (
     <nav className={cn(
-      "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-4",
-      isScrolled ? "bg-background/80 backdrop-blur-lg border-b border-white/5 py-3" : "bg-transparent"
+      "fixed top-0 left-0 right-0 z-[100] transition-all duration-500",
+      isScrolled ? "py-3 bg-background/70 backdrop-blur-xl border-b border-white/5 shadow-2xl" : "py-6 bg-transparent"
     )}>
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center group-hover:rotate-12 transition-transform shadow-lg shadow-primary/20">
-            <Rocket className="text-white w-6 h-6" />
-          </div>
-          <span className="text-2xl font-bold tracking-tighter text-white">ADZ PRO</span>
+          <motion.div 
+            whileHover={{ rotate: 15, scale: 1.1 }}
+            className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20"
+          >
+            <Rocket className="text-white w-5 h-5" />
+          </motion.div>
+          <span className="text-2xl font-black tracking-tighter text-white">ADZ PRO</span>
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-10">
           {navLinks.map((link) => (
             <Link 
               key={link.name} 
               href={link.href}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-white",
-                pathname === link.href ? "text-primary" : "text-muted-foreground"
+                "text-sm font-bold transition-all duration-300 hover:text-white uppercase tracking-wider",
+                pathname === link.href ? "active-nav-link" : "text-white/60"
               )}
             >
               {link.name}
             </Link>
           ))}
-          <Button asChild className="rounded-full px-6 font-semibold shadow-lg shadow-primary/30">
-            <Link href="/contact">Get Started</Link>
+          <Button asChild className="rounded-full px-8 font-bold bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20">
+            <Link href="/contact">Free Audit</Link>
           </Button>
         </div>
 
@@ -66,31 +69,55 @@ export function Navbar() {
           className="md:hidden text-white p-2"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          {mobileMenuOpen ? <X /> : <Menu />}
+          {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-[72px] bg-background z-40 p-6 flex flex-col gap-6 animate-in slide-in-from-top duration-300">
-          {navLinks.map((link) => (
-            <Link 
-              key={link.name} 
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className={cn(
-                "text-xl font-bold border-b border-white/5 pb-4",
-                pathname === link.href ? "text-primary" : "text-white"
-              )}
-            >
-              {link.name}
-            </Link>
-          ))}
-          <Button asChild className="w-full py-6 text-lg rounded-xl shadow-lg" onClick={() => setMobileMenuOpen(false)}>
-            <Link href="/contact">Free Consultation</Link>
-          </Button>
-        </div>
-      )}
+      {/* Mobile Menu Drawer */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="md:hidden fixed inset-0 top-0 left-0 w-full h-screen bg-background z-[110] p-8 flex flex-col"
+          >
+            <div className="flex justify-between items-center mb-16">
+              <span className="text-2xl font-black tracking-tighter">ADZ PRO</span>
+              <button onClick={() => setMobileMenuOpen(false)} className="p-2">
+                <X size={32} />
+              </button>
+            </div>
+            
+            <div className="flex flex-col gap-8">
+              {navLinks.map((link) => (
+                <Link 
+                  key={link.name} 
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(
+                    "text-4xl font-black transition-colors uppercase tracking-tight",
+                    pathname === link.href ? "text-primary" : "text-white/40"
+                  )}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+
+            <div className="mt-auto space-y-4">
+              <Button asChild className="w-full py-8 text-xl rounded-2xl font-black" onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/contact">Get Started</Link>
+              </Button>
+              <div className="flex justify-center gap-6 py-4">
+                <span className="text-white/40 text-sm">Follow us</span>
+                <div className="h-px flex-1 bg-white/10 mt-2.5" />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

@@ -1,101 +1,149 @@
+"use client"
 
-import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
-import { BarChart3, Palette, Globe, TrendingUp, ShieldCheck, Cpu } from 'lucide-react';
-
-export const metadata = {
-  title: 'Our Services | Performance Marketing & Brand Strategy',
-  description: 'Detailed advertising solutions including ROI-focused ads, brand identity, and digital growth strategies.',
-};
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { TrendingUp, ShieldCheck, Palette, Globe, ArrowRight, CheckCircle2, BarChart3, Target } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function ServicesPage() {
-  const deepServices = [
+  const [activeTab, setActiveTab] = useState(0);
+
+  const services = [
     {
       title: "Performance Advertising",
       focus: "ROI & Scaling",
+      metric: "Average 3.2x ROAS for clients",
       desc: "Our primary engine. We don't just run ads; we engineer high-performance sales funnels. Using multi-channel attribution and real-time optimization, we ensure every cent of your ad spend is working toward a conversion.",
-      features: ["Multi-platform (FB, Google, LinkedIn)", "A/B Multivariate Testing", "Pixel & API Conversion Tracking"],
-      icon: <TrendingUp className="w-12 h-12 text-primary" />,
-      color: "bg-primary/10"
+      process: ["Market Gap Analysis", "Omnichannel Launch", "Iterative Scaling"],
+      icon: <TrendingUp size={32} />,
+      color: "text-primary"
     },
     {
       title: "Brand Strategy",
       focus: "Identity & Positioning",
+      metric: "127% Increase in Brand Recall",
       desc: "How does the world see you? We define your brand's voice, visual DNA, and market positioning to ensure you're not just a commodity, but a cult favorite.",
-      features: ["Market Gap Analysis", "Brand Voice & Guidelines", "Logo & Identity Systems"],
-      icon: <ShieldCheck className="w-12 h-12 text-accent" />,
-      color: "bg-accent/10"
+      process: ["Visual DNA Mapping", "Voice Guidelines", "Market Positioning"],
+      icon: <Target size={32} />,
+      color: "text-accent"
     },
     {
       title: "Creative Content",
       focus: "High-Impact Visuals",
+      metric: "5M+ Views Generated Monthly",
       desc: "In the attention economy, your creative is your most valuable asset. We produce high-impact video, graphic, and copy assets designed specifically to stop the scroll.",
-      features: ["Viral Short-form Video", "Motion Graphics", "Direct-Response Copywriting"],
-      icon: <Palette className="w-12 h-12 text-primary" />,
-      color: "bg-primary/10"
+      process: ["Concept Ideation", "High-Tech Production", "Post-Launch Audit"],
+      icon: <Palette size={32} />,
+      color: "text-primary"
     },
     {
       title: "Digital Growth",
       focus: "Holistic SEO & Social",
+      metric: "Top 3 Ranking for Core Terms",
       desc: "Organic growth is the backbone of brand longevity. We implement deep-technical SEO and community-led social strategies that drive evergreen traffic.",
-      features: ["Technical SEO Audit", "Content Cluster Strategy", "Community Management"],
-      icon: <Globe className="w-12 h-12 text-accent" />,
-      color: "bg-accent/10"
+      process: ["Technical SEO Audit", "Content Hub Strategy", "Community Scaling"],
+      icon: <Globe size={32} />,
+      color: "text-accent"
     }
   ];
 
   return (
-    <main className="min-h-screen">
-      <Navbar />
-      
-      {/* Page Header */}
-      <section className="pt-32 pb-20 bg-background">
-        <div className="max-w-7xl mx-auto px-6 text-center space-y-6">
-          <h1 className="text-5xl md:text-7xl font-extrabold text-white">What We <span className="text-gradient">Do</span>.</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            From performance-driven ad campaigns to comprehensive brand overhauls, we provide the full stack of digital services required to dominate your niche.
+    <div className="page-transition pt-32 pb-24">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center space-y-6 mb-24">
+          <motion.h2 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-sm font-black text-primary uppercase tracking-[0.4em]"
+          >
+            Capabilities
+          </motion.h2>
+          <motion.h1 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-6xl md:text-8xl font-black leading-tight"
+          >
+            What We <span className="text-gradient">Do</span>.
+          </motion.h1>
+          <p className="text-xl text-white/60 max-w-2xl mx-auto leading-relaxed">
+            From performance-driven ad campaigns to comprehensive brand overhauls, we provide the full stack of digital services required to dominate.
           </p>
         </div>
-      </section>
 
-      {/* Detailed Services Grid */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 space-y-24">
-          {deepServices.map((service, i) => (
-            <div key={i} className={`flex flex-col ${i % 2 !== 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-16 items-center`}>
-              <div className="flex-1 space-y-8 animate-in fade-in slide-in-from-bottom duration-700">
-                <div className={`w-20 h-20 rounded-3xl ${service.color} flex items-center justify-center`}>
+        {/* Tabbed Interface */}
+        <div className="grid lg:grid-cols-12 gap-12 min-h-[600px]">
+          {/* Tabs List */}
+          <div className="lg:col-span-4 flex flex-col gap-4">
+            {services.map((service, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveTab(i)}
+                className={`flex items-center gap-6 p-8 rounded-3xl transition-all text-left group ${
+                  activeTab === i 
+                  ? "bg-primary text-white shadow-2xl shadow-primary/30" 
+                  : "glassmorphism border-white/5 hover:border-white/20 text-white/40"
+                }`}
+              >
+                <div className={`p-4 rounded-2xl ${activeTab === i ? 'bg-white/20' : 'bg-white/5'}`}>
                   {service.icon}
                 </div>
-                <div className="space-y-4">
-                  <h2 className="text-sm font-bold text-primary uppercase tracking-[0.3em]">{service.focus}</h2>
-                  <h3 className="text-4xl font-bold text-white">{service.title}</h3>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    {service.desc}
+                <div>
+                  <h4 className="text-lg font-black uppercase tracking-tight leading-none mb-1">{service.title}</h4>
+                  <p className={`text-xs font-bold uppercase tracking-widest ${activeTab === i ? 'text-white/70' : 'text-white/20'}`}>{service.focus}</p>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* Content Area */}
+          <div className="lg:col-span-8 relative">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="glassmorphism p-12 md:p-20 rounded-[40px] border-white/5 h-full flex flex-col justify-center space-y-10"
+              >
+                <div className="space-y-6">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary text-xs font-black uppercase tracking-widest">
+                    <BarChart3 size={16} />
+                    {services[activeTab].metric}
+                  </div>
+                  <h3 className="text-5xl md:text-6xl font-black">{services[activeTab].title}</h3>
+                  <p className="text-xl text-white/60 leading-relaxed">
+                    {services[activeTab].desc}
                   </p>
                 </div>
-                <ul className="grid sm:grid-cols-2 gap-4">
-                  {service.features.map((feature, fidx) => (
-                    <li key={fidx} className="flex items-center gap-3 text-white/80 font-medium">
-                      <div className="w-2 h-2 rounded-full bg-accent" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex-1 w-full aspect-video glassmorphism rounded-3xl border-primary/20 p-1 flex items-center justify-center relative group">
-                <div className="absolute inset-0 bg-primary/5 rounded-3xl blur-2xl group-hover:bg-primary/10 transition-colors" />
-                <Cpu className="w-32 h-32 text-white/10" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-8xl font-black text-white/5 select-none">{i + 1}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
 
-      <Footer />
-    </main>
+                <div className="space-y-6">
+                  <h4 className="text-xs font-black text-white/20 uppercase tracking-[0.4em]">Our Process</h4>
+                  <div className="flex flex-col md:flex-row gap-4">
+                    {services[activeTab].process.map((step, sidx) => (
+                      <div key={sidx} className="flex-1 p-6 rounded-2xl bg-white/5 border border-white/5 flex flex-col gap-4">
+                        <span className="text-xs font-black text-primary uppercase">Step 0{sidx + 1}</span>
+                        <p className="font-bold text-white/90">{step}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-6">
+                  <Button asChild size="lg" className="rounded-full px-10 h-16 group">
+                    <Link href="/portfolio">
+                      See Results for this service
+                      <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

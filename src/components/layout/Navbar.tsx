@@ -1,7 +1,9 @@
+
 "use client"
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X, Rocket } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -9,6 +11,7 @@ import { Button } from '@/components/ui/button';
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,10 +22,11 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'About', href: '#about' },
-    { name: 'Services', href: '#services' },
-    { name: 'Portfolio', href: '#portfolio' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/about' },
+    { name: 'Services', href: '/services' },
+    { name: 'Portfolio', href: '/portfolio' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   return (
@@ -32,7 +36,7 @@ export function Navbar() {
     )}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center group-hover:rotate-12 transition-transform">
+          <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center group-hover:rotate-12 transition-transform shadow-lg shadow-primary/20">
             <Rocket className="text-white w-6 h-6" />
           </div>
           <span className="text-2xl font-bold tracking-tighter text-white">ADZ PRO</span>
@@ -44,19 +48,22 @@ export function Navbar() {
             <Link 
               key={link.name} 
               href={link.href}
-              className="text-sm font-medium text-muted-foreground hover:text-white transition-colors"
+              className={cn(
+                "text-sm font-medium transition-colors hover:text-white",
+                pathname === link.href ? "text-primary" : "text-muted-foreground"
+              )}
             >
               {link.name}
             </Link>
           ))}
-          <Button asChild className="rounded-full px-6 font-semibold">
-            <Link href="#contact">Get Started</Link>
+          <Button asChild className="rounded-full px-6 font-semibold shadow-lg shadow-primary/30">
+            <Link href="/contact">Get Started</Link>
           </Button>
         </div>
 
         {/* Mobile Toggle */}
         <button 
-          className="md:hidden text-white"
+          className="md:hidden text-white p-2"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X /> : <Menu />}
@@ -71,13 +78,16 @@ export function Navbar() {
               key={link.name} 
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="text-xl font-bold text-white border-b border-white/5 pb-4"
+              className={cn(
+                "text-xl font-bold border-b border-white/5 pb-4",
+                pathname === link.href ? "text-primary" : "text-white"
+              )}
             >
               {link.name}
             </Link>
           ))}
-          <Button asChild className="w-full py-6 text-lg rounded-xl" onClick={() => setMobileMenuOpen(false)}>
-            <Link href="#contact">Free Consultation</Link>
+          <Button asChild className="w-full py-6 text-lg rounded-xl shadow-lg" onClick={() => setMobileMenuOpen(false)}>
+            <Link href="/contact">Free Consultation</Link>
           </Button>
         </div>
       )}

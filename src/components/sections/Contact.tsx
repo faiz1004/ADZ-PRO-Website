@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useState } from 'react';
@@ -8,7 +9,9 @@ import {
   Send, 
   Linkedin, 
   Facebook,
-  Loader2
+  Loader2,
+  Clock,
+  ArrowRight
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -33,11 +36,11 @@ export function Contact() {
     setLoading(true);
 
     try {
-      // Store in Firestore
-      await addDoc(collection(db, "contacts"), {
+      // Store in Firestore leads collection
+      await addDoc(collection(db, "leads"), {
         ...formData,
         timestamp: serverTimestamp(),
-        to: "operation@adzpro.co.in" // Meta info for logic later
+        source: "website_contact_page"
       });
 
       toast({
@@ -63,56 +66,68 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 bg-card/20 relative">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-16">
+    <section id="contact" className="py-24 bg-background relative overflow-hidden">
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full -mr-64 -mt-64" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/10 blur-[120px] rounded-full -ml-64 -mb-64" />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
           <div className="space-y-12">
             <div className="space-y-6">
-              <h2 className="text-sm font-bold text-primary uppercase tracking-[0.3em]">Contact Us</h2>
-              <h3 className="text-4xl md:text-5xl font-bold">Let's Build Something Extraordinary</h3>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <h2 className="text-sm font-bold text-primary uppercase tracking-[0.3em]">Connect With Us</h2>
+              <h3 className="text-4xl md:text-6xl font-extrabold text-white leading-tight">Let's Build Something <span className="text-gradient">Extraordinary</span>.</h3>
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-md">
                 Ready to take your brand to the next level? Get in touch with our team for a free consultation and customized strategy.
               </p>
             </div>
 
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl glassmorphism flex items-center justify-center shrink-0">
-                  <Mail className="text-primary w-6 h-6" />
+            <div className="space-y-8">
+              <div className="flex items-start gap-6 p-6 glassmorphism rounded-2xl border-white/5 group hover:border-primary/30 transition-all">
+                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <Mail className="text-primary w-7 h-7" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-white/50 uppercase tracking-widest">Email Us</p>
+                  <p className="text-sm font-bold text-white/50 uppercase tracking-widest mb-1">Email Us</p>
                   <a href="mailto:operation@adzpro.co.in" className="text-xl font-medium hover:text-primary transition-colors">operation@adzpro.co.in</a>
+                  <p className="text-sm text-muted-foreground mt-1">Response time: &lt; 24 hours</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl glassmorphism flex items-center justify-center shrink-0">
-                  <MapPin className="text-accent w-6 h-6" />
+              <div className="flex items-start gap-6 p-6 glassmorphism rounded-2xl border-white/5 group hover:border-accent/30 transition-all">
+                <div className="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <MapPin className="text-accent w-7 h-7" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-white/50 uppercase tracking-widest">Our Office</p>
+                  <p className="text-sm font-bold text-white/50 uppercase tracking-widest mb-1">Our Office</p>
                   <p className="text-xl font-medium leading-snug">
                     Plot No. 29 B, Ambedkar Colony, Bijwasan, New Delhi, 110061
                   </p>
+                  <p className="text-sm text-muted-foreground mt-1">Open: Mon - Sat (10 AM - 7 PM)</p>
                 </div>
               </div>
             </div>
 
             <div className="pt-8">
-              <p className="text-sm font-bold text-white/50 uppercase tracking-widest mb-4">Follow Our Journey</p>
+              <p className="text-sm font-bold text-white/50 uppercase tracking-widest mb-6">Follow Our Journey</p>
               <div className="flex gap-4">
-                <a href="https://www.linkedin.com/in/adzpro/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full glassmorphism flex items-center justify-center hover:bg-primary transition-colors">
-                  <Linkedin className="w-5 h-5" />
+                <a href="https://www.linkedin.com/in/adzpro/" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-full glassmorphism flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-lg hover:shadow-primary/30">
+                  <Linkedin className="w-6 h-6" />
                 </a>
-                <a href="https://www.facebook.com/people/Adz-Pro/61564387431825/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full glassmorphism flex items-center justify-center hover:bg-primary transition-colors">
-                  <Facebook className="w-5 h-5" />
+                <a href="https://www.facebook.com/people/Adz-Pro/61564387431825/" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-full glassmorphism flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-lg hover:shadow-primary/30">
+                  <Facebook className="w-6 h-6" />
                 </a>
               </div>
             </div>
           </div>
 
-          <div className="glassmorphism p-8 md:p-12 rounded-3xl border-primary/20 shadow-2xl">
+          <div className="glassmorphism p-8 md:p-12 rounded-[40px] border-primary/20 shadow-2xl relative">
+            <div className="absolute top-0 right-10 -mt-6">
+               <div className="px-6 py-3 bg-primary text-white text-sm font-bold rounded-full shadow-xl animate-bounce">
+                  Free Consultation
+               </div>
+            </div>
+            
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
@@ -123,7 +138,7 @@ export function Contact() {
                     required 
                     value={formData.name}
                     onChange={handleChange}
-                    className="bg-white/5 border-white/10 h-12 rounded-xl"
+                    className="bg-white/5 border-white/10 h-14 rounded-2xl focus:ring-primary/50"
                   />
                 </div>
                 <div className="space-y-2">
@@ -135,7 +150,7 @@ export function Contact() {
                     required 
                     value={formData.email}
                     onChange={handleChange}
-                    className="bg-white/5 border-white/10 h-12 rounded-xl"
+                    className="bg-white/5 border-white/10 h-14 rounded-2xl focus:ring-primary/50"
                   />
                 </div>
               </div>
@@ -147,7 +162,7 @@ export function Contact() {
                   required 
                   value={formData.subject}
                   onChange={handleChange}
-                  className="bg-white/5 border-white/10 h-12 rounded-xl"
+                  className="bg-white/5 border-white/10 h-14 rounded-2xl focus:ring-primary/50"
                 />
               </div>
               <div className="space-y-2">
@@ -158,16 +173,16 @@ export function Contact() {
                   required 
                   value={formData.message}
                   onChange={handleChange}
-                  className="bg-white/5 border-white/10 min-h-[150px] rounded-xl"
+                  className="bg-white/5 border-white/10 min-h-[150px] rounded-2xl focus:ring-primary/50"
                 />
               </div>
-              <Button type="submit" size="lg" disabled={loading} className="w-full h-14 rounded-xl text-lg font-bold group">
+              <Button type="submit" size="lg" disabled={loading} className="w-full h-16 rounded-2xl text-xl font-bold group shadow-lg shadow-primary/20">
                 {loading ? (
                   <Loader2 className="animate-spin mr-2" />
                 ) : (
                   <>
                     Send Inquiry
-                    <Send className="ml-2 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    <Send className="ml-2 w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </>
                 )}
               </Button>

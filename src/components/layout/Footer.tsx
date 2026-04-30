@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Rocket, Mail, MapPin, Linkedin, Facebook, ArrowRight, Loader2, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -13,8 +13,12 @@ export function Footer() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
+  const [year, setYear] = useState(2025); // Default to founding year
   const { toast } = useToast();
-  const currentYear = new Date().getFullYear();
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -112,7 +116,7 @@ export function Footer() {
         </div>
 
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-medium text-white/30 uppercase tracking-widest">
-          <p>© {currentYear} Adz Pro Digital Marketing. Global Results.</p>
+          <p>© {year} Adz Pro Digital Marketing. Global Results.</p>
           <div className="flex gap-8">
             <Link href="#" className="hover:text-white transition-colors">Privacy</Link>
             <Link href="#" className="hover:text-white transition-colors">Terms</Link>

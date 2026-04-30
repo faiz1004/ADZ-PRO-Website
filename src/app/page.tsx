@@ -3,10 +3,17 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import dynamic from 'next/dynamic';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Sparkles, TrendingUp, Users, Star, Zap, ChevronDown } from 'lucide-react';
+import { ArrowRight, Sparkles, TrendingUp, Users, Star, Zap } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+
+// Dynamically import the particle background with SSR disabled to prevent hydration errors
+const ParticleBackground = dynamic(
+  () => import('@/components/sections/ParticleBackground'),
+  { ssr: false }
+);
 
 export default function Home() {
   const [visionText, setVisionText] = useState('Visions');
@@ -19,7 +26,7 @@ export default function Home() {
       setVisionText(visions[i]);
     }, 2000);
     return () => clearInterval(interval);
-  }, []);
+  }, [visions]);
 
   const stats = [
     { label: "Active Clients", value: 150, suffix: "+", icon: <Users size={20} /> },
@@ -34,21 +41,8 @@ export default function Home() {
     <div className="page-transition">
       {/* Premium Hero Section */}
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden mesh-gradient">
-        {/* Animated Particle Overlay */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
-           {Array.from({ length: 30 }).map((_, i) => (
-             <motion.div
-               key={i}
-               initial={{ x: Math.random() * 2000, y: Math.random() * 2000 }}
-               animate={{ 
-                 x: [Math.random() * 2000, Math.random() * 2000],
-                 y: [Math.random() * 2000, Math.random() * 2000]
-               }}
-               transition={{ duration: 20 + Math.random() * 40, repeat: Infinity, ease: "linear" }}
-               className="absolute w-1 h-1 bg-white rounded-full blur-[1px]"
-             />
-           ))}
-        </div>
+        {/* Client-only Animated Particle Overlay */}
+        <ParticleBackground />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
           <div className="space-y-10">

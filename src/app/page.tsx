@@ -250,7 +250,7 @@ export default function Home() {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                padding: '0 24px',
+                padding: '0 32px',
                 flexShrink: 0
               }}
             >

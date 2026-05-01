@@ -66,6 +66,16 @@ export default function Home() {
     { name: "D2C Brands", icon: <ShoppingBag size={24} /> },
   ];
 
+  const tickerItems = [
+    { value: '₹2.4CR',  label: 'Ad Spend Managed'    },
+    { value: '500+',    label: 'Campaigns Launched'   },
+    { value: '3.8x',    label: 'Average ROAS'         },
+    { value: '98%',     label: 'Retention Rate'        },
+    { value: '12+',     label: 'Industries Served'    },
+    { value: '+127%',   label: 'Average ROI Increase' },
+    { value: '2.1M',    label: 'Total Reach Delivered'},
+  ];
+
   return (
     <div className="page-transition">
       {/* Guaranteed Visible Hero Section */}
@@ -211,22 +221,72 @@ export default function Home() {
       </section>
 
       {/* Marquee Ticker */}
-      <section className="py-6 md:py-12 border-y relative overflow-hidden bg-ticker-bg border-border">
-        <div className="flex animate-marquee whitespace-nowrap">
-          {[...Array(2)].map((_, i) => (
-            <div key={i} className="flex gap-8 md:gap-12 items-center mx-4 md:mx-6">
-              <span className="font-black text-accent-primary">✦</span>
-              <span className="text-sm md:text-xl font-black uppercase tracking-widest text-text-primary"><span className="text-accent-primary">₹2.4Cr</span> Ad Spend</span>
-              <span className="font-black text-accent-primary">✦</span>
-              <span className="text-sm md:text-xl font-black uppercase tracking-widest text-text-primary"><span className="text-accent-primary">500+</span> Campaigns</span>
-              <span className="font-black text-accent-primary">✦</span>
-              <span className="text-sm md:text-xl font-black uppercase tracking-widest text-text-primary"><span className="text-accent-primary">3.8x</span> ROAS</span>
-              <span className="font-black text-accent-primary">✦</span>
-              <span className="text-sm md:text-xl font-black uppercase tracking-widest text-text-primary"><span className="text-accent-primary">98%</span> Retention</span>
+      <div 
+        style={{
+          width: '100%',
+          overflow: 'hidden',
+          background: 'var(--ticker-bg)',
+          borderTop: '1px solid var(--border)',
+          borderBottom: '1px solid var(--border)',
+          padding: '14px 0',
+          position: 'relative',
+          zIndex: 5
+        }}
+      >
+        <div
+          className="marquee-track"
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            width: 'fit-content',
+            whiteSpace: 'nowrap',
+            gap: '0px'
+          }}
+        >
+          {[...tickerItems, ...tickerItems].map((item, index) => (
+            <div
+              key={index}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '0 24px',
+                flexShrink: 0
+              }}
+            >
+              <span style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                background: 'var(--accent-primary)',
+                opacity: 0.5,
+                flexShrink: 0,
+                display: 'inline-block'
+              }} />
+              
+              <span style={{
+                color: 'var(--accent-primary)',
+                fontWeight: 800,
+                fontSize: '0.85rem',
+                letterSpacing: '0.05em'
+              }}>
+                {item.value}
+              </span>
+              
+              <span style={{
+                color: 'var(--text-muted)',
+                fontWeight: 600,
+                fontSize: '0.85rem',
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase'
+              }}>
+                {item.label}
+              </span>
             </div>
           ))}
         </div>
-      </section>
+      </div>
 
       {/* Industries Grid */}
       <section className="py-16 md:py-32 bg-background">

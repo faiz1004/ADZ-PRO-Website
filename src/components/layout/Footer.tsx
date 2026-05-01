@@ -23,18 +23,35 @@ export function Footer() {
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || !email.includes('@')) return;
+    
     setLoading(true);
+
+    // Timeout safety net - 8 seconds
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error("Timeout")), 8000)
+    );
+
     try {
-      await addDoc(collection(db, "newsletter_subscribers"), {
-        email,
-        timestamp: serverTimestamp()
+      const subscriptionPromise = addDoc(collection(db, "newsletter_subscribers"), {
+        email: email.trim().toLowerCase(),
+        timestamp: serverTimestamp(),
+        source: 'footer_form'
       });
+
+      // Race against timeout
+      await Promise.race([subscriptionPromise, timeoutPromise]);
+      
       setSubscribed(true);
       toast({ title: "Subscribed!", description: "You're on the list." });
       setEmail('');
     } catch (error) {
-      toast({ variant: "destructive", title: "Error", description: "Could not subscribe." });
+      console.error('Newsletter error:', error);
+      toast({ 
+        variant: "destructive", 
+        title: "Error", 
+        description: "Could not subscribe. Please check your connection and try again." 
+      });
     } finally {
       setLoading(false);
     }
@@ -104,9 +121,27 @@ export function Footer() {
             <h4 className="text-sm md:text-lg font-bold uppercase tracking-widest text-text-primary">Stay Updated</h4>
             <form onSubmit={handleSubscribe} className="space-y-3">
               <div className="flex flex-col sm:flex-row gap-3">
-                <Input type="email" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} className="h-12 md:h-14 rounded-xl bg-surface border-border text-text-primary min-h-[44px]" />
-                <Button type="submit" disabled={loading} className="h-12 md:h-14 rounded-xl px-6 min-h-[44px] shrink-0" style={{ background: 'var(--accent-primary)', color: '#FFF' }}>
-                  {loading ? <Loader2 size={18} className="animate-spin" /> : <span className="flex items-center gap-2">Join <ArrowRight size={16} /></span>}
+                <Input 
+                  type="email" 
+                  placeholder="Email Address" 
+                  value={email} 
+                  onChange={(e) => setEmail(e.target.value)} 
+                  disabled={loading || subscribed}
+                  className="h-12 md:h-14 rounded-xl bg-surface border-border text-text-primary min-h-[44px]" 
+                />
+                <Button 
+                  type="submit" 
+                  disabled={loading || subscribed} 
+                  className="h-12 md:h-14 rounded-xl px-6 min-h-[44px] shrink-0" 
+                  style={{ background: subscribed ? '#10B981' : 'var(--accent-primary)', color: '#FFF' }}
+                >
+                  {loading ? (
+                    <Loader2 size={18} className="animate-spin" />
+                  ) : subscribed ? (
+                    <CheckCircle size={18} />
+                  ) : (
+                    <span className="flex items-center gap-2">Join <ArrowRight size={16} /></span>
+                  )}
                 </Button>
               </div>
               {subscribed && <p className="text-xs flex items-center gap-1 text-success"><CheckCircle size={12} /> You're on the list!</p>}

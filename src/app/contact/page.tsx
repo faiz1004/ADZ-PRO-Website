@@ -28,18 +28,32 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
+    
     setLoading(true);
 
+    // Timeout safety net - 10 seconds for larger forms
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error("Timeout")), 10000)
+    );
+
     try {
-      await addDoc(collection(db, "leads"), {
+      const submissionPromise = addDoc(collection(db, "leads"), {
         ...formData,
         timestamp: serverTimestamp(),
         source: "website_contact_v2"
       });
+
+      await Promise.race([submissionPromise, timeoutPromise]);
+      
       setSubmitted(true);
       toast({ title: "Sent!", description: "Talk to you soon." });
     } catch (error) {
-      toast({ variant: "destructive", title: "Error", description: "Submission failed." });
+      console.error('Contact form error:', error);
+      toast({ 
+        variant: "destructive", 
+        title: "Submission Error", 
+        description: "There was a problem sending your message. Please try again." 
+      });
     } finally {
       setLoading(false);
     }

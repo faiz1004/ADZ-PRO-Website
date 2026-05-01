@@ -20,7 +20,7 @@ export function Footer() {
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Basic validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email)) {
@@ -29,12 +29,12 @@ export function Footer() {
       setTimeout(() => setStatus('idle'), 3000);
       return;
     }
-    
+
     setStatus('loading');
     setMessage('');
 
     // Timeout safety net
-    const timeoutPromise = new Promise((_, reject) => 
+    const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => reject(new Error("Timeout")), 8000)
     );
 
@@ -42,7 +42,7 @@ export function Footer() {
       // Method 1: Try Firestore
       const { db } = await import('@/app/lib/firebase');
       const { collection, addDoc, serverTimestamp } = await import('firebase/firestore');
-      
+
       const subscriptionPromise = addDoc(collection(db, "newsletter_subscribers"), {
         email: email.trim().toLowerCase(),
         timestamp: serverTimestamp(),
@@ -51,13 +51,13 @@ export function Footer() {
 
       // Race against timeout
       await Promise.race([subscriptionPromise, timeoutPromise]);
-      
+
       setStatus('success');
       setMessage("You're on the list! Welcome to Adz Pro.");
       setEmail('');
     } catch (error) {
       console.warn('Subscription attempt failed or timed out:', error);
-      
+
       // Method 2: Fallback — localStorage backup
       try {
         const key = 'adz_subscribers_fallback';
@@ -78,7 +78,7 @@ export function Footer() {
       setTimeout(() => {
         if (status === 'loading') setStatus('idle');
       }, 3000);
-      
+
       // Clear status after 5s
       setTimeout(() => {
         setStatus('idle');
@@ -104,10 +104,23 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 md:gap-16 mb-12 md:mb-20">
           <div className="lg:col-span-4 space-y-6 md:space-y-8">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shrink-0" style={{ background: 'var(--accent-primary)' }}>
-                <Rocket className="text-white w-5 h-5" />
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shrink-0 overflow-hidden"
+                style={{ background: 'var(--accent-primary)' }}
+              >
+                <img
+                  src="/Adz-Logo.png" // replace with your actual logo path
+                  alt="ADZ PRO Logo"
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <span className="text-2xl font-black tracking-tighter" style={{ color: 'var(--text-primary)' }}>ADZ PRO</span>
+
+              <span
+                className="text-2xl font-black tracking-tighter"
+                style={{ color: 'var(--text-primary)' }}
+              >
+                ADZ PRO
+              </span>
             </Link>
             <p className="text-sm md:text-base leading-relaxed max-w-sm" style={{ color: 'var(--text-secondary)' }}>
               We engineer high-performance sales funnels and creative brand identities for the next generation of digital-first companies.
@@ -151,18 +164,18 @@ export function Footer() {
             <h4 className="text-sm md:text-lg font-bold uppercase tracking-widest text-text-primary">Stay Updated</h4>
             <form onSubmit={handleSubscribe} className="space-y-3">
               <div className="flex flex-col sm:flex-row gap-3">
-                <Input 
-                  type="email" 
-                  placeholder="Email Address" 
-                  value={email} 
-                  onChange={(e) => setEmail(e.target.value)} 
+                <Input
+                  type="email"
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   disabled={status === 'loading' || status === 'success'}
-                  className="h-12 md:h-14 rounded-xl bg-surface border-border text-text-primary min-h-[44px]" 
+                  className="h-12 md:h-14 rounded-xl bg-surface border-border text-text-primary min-h-[44px]"
                 />
-                <Button 
-                  type="submit" 
-                  disabled={status === 'loading' || status === 'success'} 
-                  className="h-12 md:h-14 rounded-xl px-6 min-h-[44px] shrink-0 font-bold" 
+                <Button
+                  type="submit"
+                  disabled={status === 'loading' || status === 'success'}
+                  className="h-12 md:h-14 rounded-xl px-6 min-h-[44px] shrink-0 font-bold"
                   style={{ background: status === 'success' ? '#10B981' : 'var(--accent-primary)', color: '#FFF' }}
                 >
                   {status === 'loading' ? (

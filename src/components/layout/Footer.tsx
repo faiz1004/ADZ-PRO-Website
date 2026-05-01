@@ -6,6 +6,7 @@ import { Rocket, Mail, MapPin, Linkedin, Instagram, Facebook, ArrowRight, Loader
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 export function Footer() {
   const [email, setEmail] = useState('');

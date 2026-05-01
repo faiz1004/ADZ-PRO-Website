@@ -26,7 +26,7 @@
 
   --navbar-bg:         rgba(240, 247, 251, 0.85);
   --card-bg:           rgba(255, 255, 255, 0.80);
-  --hero-gradient:     linear-gradient(135deg, #F0F7FB 0%, #E1EFF7 50%, #D0E8F5 100%);
+  --hero-gradient:     linear-gradient(135deg, #F0F7FB 0%, #E1EFF7 40%, #D0E8F5 100%);
   --section-alt:       #E8F4FA;
   --ticker-bg:         rgba(30, 139, 181, 0.08);
   --shadow:            0 4px 24px rgba(30, 139, 181, 0.12);
@@ -203,8 +203,20 @@
 .hero-mesh {
   background: linear-gradient(
     -45deg,
-    #070E1A, #0A1628, #1E8BB5,
-    #0D6A91, #070E1A, #0F1E35
+    var(--background),
+    var(--background-secondary),
+    rgba(30, 139, 181, 0.15),
+    var(--background)
+  );
+  background-size: 400% 400%;
+  animation: meshMove 12s ease infinite;
+}
+
+.dark .hero-mesh {
+  background: linear-gradient(
+    -45deg,
+    #070E1A, #0A1628, #1E3A5F,
+    #0F2040, #070E1A
   );
   background-size: 400% 400%;
   animation: meshMove 12s ease infinite;

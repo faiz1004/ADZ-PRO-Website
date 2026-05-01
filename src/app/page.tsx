@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
+import { CampaignDashboard } from '@/components/CampaignDashboard';
 
 const ParticleBackground = dynamic(
   () => import('@/components/sections/ParticleBackground'),
@@ -38,57 +39,6 @@ const SectionDivider = () => (
       <rect x="6" y="0" width="8.48528" height="8.48528" transform="rotate(45 6 0)" fill="currentColor"/>
     </svg>
     <span />
-  </div>
-);
-
-const DashboardMockup = () => (
-  <div className="relative p-4 md:p-6 rounded-[24px] md:rounded-[32px] border glassmorphism bg-surface-glass/10 shadow-strong overflow-hidden max-w-full">
-    <div className="flex items-center justify-between mb-6 md:mb-8 pb-4 border-b border-white/10">
-      <div className="flex gap-1.5">
-        <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
-        <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
-        <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
-      </div>
-      <span className="text-[9px] md:text-[10px] font-mono text-text-muted truncate ml-4">adzpro.co.in/dashboard</span>
-    </div>
-
-    <div className="grid grid-cols-3 gap-3 md:gap-4 mb-6 md:mb-8">
-      {[
-        { label: "ROAS", val: "4.2x", change: "↑ 127%", type: "accent" },
-        { label: "Reach", val: "2.1M", change: "↑ 84%", type: "primary" },
-        { label: "CPL", val: "↓ 62%", change: "Opt.", type: "success" }
-      ].map((s, i) => (
-        <div key={i} className="p-3 md:p-4 rounded-xl md:rounded-2xl glassmorphism bg-white/5 space-y-1">
-          <p className="text-[8px] md:text-[10px] font-black uppercase text-text-muted">{s.label}</p>
-          <p className={cn("text-lg md:text-2xl font-black", s.type === 'accent' ? "text-accent-primary" : s.type === 'success' ? "text-success" : "text-text-primary")}>{s.val}</p>
-          <p className="text-[8px] md:text-[10px] text-success font-bold">{s.change}</p>
-        </div>
-      ))}
-    </div>
-
-    <div className="space-y-4 mb-6 md:mb-8">
-      <div className="flex items-end gap-1.5 md:gap-2 h-24 md:h-32 px-1">
-        {[0.4, 0.7, 0.5, 0.9, 0.6, 1].map((h, i) => (
-          <motion.div 
-            key={i}
-            initial={{ height: 0 }}
-            animate={{ height: `${h * 100}%` }}
-            transition={{ delay: 0.5 + (i * 0.1), duration: 0.8 }}
-            className="flex-1 rounded-t-sm md:rounded-t-lg"
-            style={{ background: 'var(--accent-primary)', opacity: h }}
-          />
-        ))}
-      </div>
-      <p className="text-center text-[9px] md:text-[10px] font-black uppercase text-text-muted tracking-widest">Monthly Ad Performance</p>
-    </div>
-
-    <div className="flex items-center justify-between gap-4">
-      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-success/10 text-success text-[8px] md:text-[10px] font-black uppercase whitespace-nowrap">
-        <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
-        LIVE Campaign
-      </div>
-      <div className="text-[8px] md:text-[10px] font-black text-accent-primary uppercase text-right">3 New Leads Today</div>
-    </div>
   </div>
 );
 
@@ -118,108 +68,146 @@ export default function Home() {
 
   return (
     <div className="page-transition">
-      {/* Cinematic Hero Section */}
-      <section className="relative min-h-[90vh] md:min-h-screen flex items-center pt-24 md:pt-32 pb-16 overflow-hidden hero-mesh">
-        <div className="absolute inset-0 z-0 opacity-40 dot-grid" />
-        
-        {/* Animated Orbs - Reduced on mobile for performance */}
-        <div className="absolute top-[-100px] left-[-100px] w-[300px] md:w-[600px] h-[300px] md:h-[600px] rounded-full opacity-[0.05] md:opacity-10 blur-[60px] md:blur-[80px] animate-float" style={{ background: 'radial-gradient(circle, #1E8BB5 0%, transparent 70%)' }} />
-        <div className="hidden md:block absolute top-[20%] right-[-50px] w-[400px] h-[400px] rounded-full opacity-10 blur-[60px] animate-float reverse" style={{ background: 'radial-gradient(circle, #2BA8D8 0%, transparent 70%)' }} />
-
-        <div className="container-responsive relative z-10 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6 md:space-y-10 text-center lg:text-left"
-          >
-            <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full border text-[10px] md:text-sm font-bold uppercase tracking-widest glassmorphism border-white/10 mx-auto lg:mx-0" style={{ color: 'var(--accent-primary)' }}>
-              <Sparkles className="w-3 h-3 md:w-4 md:h-4" />
-              <span>Redefining Digital Growth</span>
-            </div>
-            
-            <h1 className="hero-title font-black tracking-tighter text-text-primary">
-              Transforming <br />
-              <span className="text-accent-primary inline-block min-w-[140px] md:min-w-[200px]">
-                {visionText}<span className="animate-pulse">|</span>
-              </span> <br />
-              Into Reality.
-            </h1>
-            
-            <p className="body-text max-w-lg mx-auto lg:mx-0 font-medium text-text-secondary px-4 md:px-0">
-              We engineer high-performance sales funnels and creative brand identities for the next generation of digital-first companies.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 md:gap-6 px-6 sm:px-0">
-              <Button asChild size="lg" className="rounded-full px-8 h-[56px] md:h-16 text-lg font-bold group relative overflow-hidden w-full sm:w-auto" style={{ background: 'var(--accent-primary)', color: '#FFFFFF', boxShadow: '0 0 20px var(--accent-glow)' }}>
-                <Link href="/contact">
-                  Start Scaling Now
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                  <div className="absolute inset-0 bg-white/10 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8 h-[56px] md:h-16 text-lg font-bold border glassmorphism hover:bg-accent-light transition-all text-text-primary border-border w-full sm:w-auto">
-                <Link href="/portfolio">Our Portfolio</Link>
-              </Button>
-            </div>
-
-            <div className="flex items-center justify-center lg:justify-start gap-8 md:gap-12 pt-8 md:pt-12">
-              {[
-                { label: "Active Clients", value: "150+" },
-                { label: "Retention Rate", value: "98%" },
-              ].map((stat, i) => (
-                <div key={i} className="text-center lg:text-left">
-                  <p className="text-3xl md:text-4xl font-black text-text-primary">{stat.value}</p>
-                  <p className="text-[10px] md:text-sm font-bold uppercase tracking-widest text-text-muted">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="relative px-4 md:px-0"
-          >
-            <DashboardMockup />
-            
-            {/* Floating Highlights - Hidden or repositioned on mobile */}
-            <motion.div 
-              animate={{ y: [0, -10, 0] }}
-              transition={{ repeat: Infinity, duration: 4 }}
-              className="absolute -top-6 -right-2 md:-top-10 md:-right-10 p-4 md:p-6 rounded-2xl md:rounded-3xl shadow-strong glassmorphism border-border bg-surface-glass/20 backdrop-blur-xl scale-75 md:scale-100"
-            >
-              <div className="flex items-center gap-3">
-                <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse shadow-[0_0_10px_#ef4444]" />
-                <p className="text-[9px] md:text-xs font-black uppercase text-text-primary tracking-widest">🔥 3 spots left this month</p>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              animate={{ y: [0, 10, 0] }}
-              transition={{ repeat: Infinity, duration: 5, delay: 1 }}
-              className="hidden md:flex absolute -bottom-10 -left-10 p-6 rounded-3xl shadow-strong glassmorphism border-border bg-surface-glass/20 backdrop-blur-xl"
-            >
-              <div className="flex items-center gap-3">
-                <div className="flex -space-x-3">
-                  {[1,2,3].map(i => <div key={i} className="w-8 h-8 rounded-full border-2 border-white" style={{ background: `var(--accent-primary)`, opacity: 1 - (i*0.2) }} />)}
-                </div>
-                <p className="text-xs font-black uppercase text-text-primary tracking-widest">500+ Brands Scaled</p>
-              </div>
-            </motion.div>
-          </motion.div>
+      {/* Guaranteed Visible Hero Section */}
+      <section 
+        className="relative min-h-screen flex items-center overflow-hidden hero-mesh"
+        style={{ background: 'var(--hero-gradient)' }}
+      >
+        {/* Background Layers — Behind content */}
+        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1 }}>
+          <div className="absolute inset-0 opacity-20 dot-grid" />
+          <ParticleBackground />
+          
+          {/* Glowing Orbs */}
+          <div style={{
+            position: 'absolute',
+            top: '-100px', left: '-100px',
+            width: 'min(500px, 100vw)', height: 'min(500px, 100vw)',
+            background: 'radial-gradient(circle, rgba(30,139,181,0.15) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+            borderRadius: '50%'
+          }} className="animate-float" />
+          <div style={{
+            position: 'absolute',
+            bottom: '-80px', right: '-80px',
+            width: 'min(400px, 100vw)', height: 'min(400px, 100vw)',
+            background: 'radial-gradient(circle, rgba(43,168,216,0.10) 0%, transparent 70%)',
+            filter: 'blur(50px)',
+            borderRadius: '50%'
+          }} className="animate-float reverse hidden lg:block" />
         </div>
-        
-        {/* Scroll Indicator */}
-        <motion.div 
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 md:opacity-60"
+
+        {/* Main Content — Above background */}
+        <div 
+          className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16"
+          style={{ zIndex: 10 }}
         >
-          <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-text-muted">Explore</span>
-          <ChevronDown className="text-accent-primary animate-bounce" size={20} />
-        </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            
+            {/* Left Column — Text */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col gap-6 text-center lg:text-left items-center lg:items-start"
+            >
+              {/* Badge */}
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                background: 'var(--accent-light)',
+                border: '1px solid var(--border)',
+                borderRadius: '100px',
+                padding: '6px 16px',
+                width: 'fit-content'
+              }}>
+                <Sparkles className="w-3 h-3 text-accent-primary" />
+                <span style={{ 
+                  fontSize: '11px',
+                  color: 'var(--accent-primary)',
+                  fontWeight: 700,
+                  letterSpacing: '0.05em',
+                  textTransform: 'uppercase'
+                }}>
+                  Redefining Digital Growth
+                </span>
+              </div>
+
+              {/* H1 */}
+              <h1 style={{
+                fontSize: 'clamp(2.5rem, 8vw, 5rem)',
+                fontWeight: 900,
+                lineHeight: 1.05,
+                color: 'var(--text-primary)',
+                letterSpacing: '-0.02em'
+              }} className="tracking-tighter">
+                Transforming{' '}
+                <span style={{ color: 'var(--accent-primary)' }}>
+                  {visionText}<span className="animate-pulse">|</span>
+                </span>
+                <br /> Into Reality.
+              </h1>
+
+              {/* Subtext */}
+              <p style={{
+                fontSize: 'clamp(0.95rem, 2vw, 1.15rem)',
+                color: 'var(--text-secondary)',
+                lineHeight: 1.7,
+                maxWidth: '540px'
+              }} className="font-medium">
+                We engineer high-performance sales funnels and creative brand identities for the next generation of digital-first companies.
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                <Button asChild size="lg" className="rounded-full px-8 h-16 text-lg font-bold group relative overflow-hidden w-full sm:w-auto" style={{ background: 'var(--accent-primary)', color: '#FFFFFF', boxShadow: '0 0 24px var(--accent-glow)' }}>
+                  <Link href="/contact">
+                    Start Scaling Now
+                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                    <div className="absolute inset-0 bg-white/10 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="rounded-full px-8 h-16 text-lg font-bold border glassmorphism hover:bg-accent-light transition-all text-text-primary border-border w-full sm:w-auto">
+                  <Link href="/portfolio">Our Portfolio</Link>
+                </Button>
+              </div>
+
+              {/* Stats Row */}
+              <div className="flex items-center justify-center lg:justify-start gap-8 md:gap-12 pt-8">
+                {[
+                  { label: "Active Clients", value: "150+" },
+                  { label: "Retention Rate", value: "98%" },
+                  { label: "Avg ROAS", value: "4.2x" },
+                ].map((stat, i) => (
+                  <div key={i} className="text-center lg:text-left">
+                    <p style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', fontWeight: 900, color: 'var(--text-primary)' }}>{stat.value}</p>
+                    <p style={{ fontSize: '10px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text-muted)' }}>{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Right Column — Dashboard */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 0.2 }}
+              className="relative px-2 md:px-0"
+            >
+              <CampaignDashboard />
+              
+              {/* Scroll Indicator */}
+              <motion.div 
+                animate={{ y: [0, 10, 0] }}
+                transition={{ repeat: Infinity, duration: 2 }}
+                className="absolute -bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 md:opacity-60 lg:hidden"
+              >
+                <ChevronDown className="text-accent-primary animate-bounce" size={24} />
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
       </section>
 
       {/* Marquee Ticker */}
@@ -296,9 +284,6 @@ export default function Home() {
           </motion.div>
           
           <div className="relative">
-            {/* Desktop Connector Line */}
-            <div className="absolute top-1/2 left-0 w-full h-px hidden lg:block opacity-40" style={{ background: 'var(--accent-primary)' }} />
-            
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 md:gap-12 relative z-10">
               {[
                 { step: "01", title: "Discovery", desc: "We analyze your brand, audience, and competitors deeply." },

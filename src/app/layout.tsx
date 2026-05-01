@@ -1,4 +1,3 @@
-
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
@@ -6,6 +5,8 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { FloatingElements } from '@/components/layout/FloatingElements';
 import { ThemeProvider } from '@/components/theme-provider';
+import { ScrollProgressBar } from '@/components/ui/scroll-progress-bar';
+import { CustomCursor } from '@/components/ui/custom-cursor';
 
 export const metadata: Metadata = {
   title: 'Adz Pro | Leading Advertising Agency in New Delhi',
@@ -77,7 +78,8 @@ export default function RootLayout({
     },
     "sameAs": [
       "https://www.facebook.com/people/Adz-Pro/61564387431825/",
-      "https://www.linkedin.com/in/adzpro/"
+      "https://www.linkedin.com/in/adzpro/",
+      "https://www.instagram.com/adzpro.co.in"
     ]
   };
 
@@ -99,6 +101,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <ScrollProgressBar />
+          <CustomCursor />
           <Navbar />
           <main className="min-h-screen">
             {children}

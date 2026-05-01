@@ -2,11 +2,8 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, MapPin, Send, MessageCircle, ExternalLink, CheckCircle, Loader2, Clock, Zap } from 'lucide-react';
+import { Mail, MapPin, Send, MessageCircle, ExternalLink, CheckCircle, Loader2, Clock, Zap, Linkedin, Instagram, Facebook } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { db } from '@/app/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
@@ -54,71 +51,204 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="page-transition pt-32 pb-24">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Strategy Call Section */}
-        <div className="mb-32 text-center space-y-12">
-           <div className="space-y-6">
-             <h2 className="text-sm font-black uppercase tracking-[0.4em]" style={{ color: 'var(--accent-primary)' }}>Let's Scale</h2>
-             <h1 className="text-6xl md:text-8xl font-black" style={{ color: 'var(--text-primary)' }}>Book Your <span className="text-gradient">Audit</span>.</h1>
-             <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-               Ready to stop guessing and start growing? Book a free strategy call with our growth experts.
-             </p>
-           </div>
-           <div className="flex flex-col sm:flex-row justify-center gap-6">
-             <Button asChild size="lg" className="rounded-full h-16 px-10 text-lg font-black shadow-2xl" style={{ background: 'var(--accent-primary)', color: 'var(--text-inverse)' }}>
-               <a href="mailto:operation@adzpro.co.in">Schedule Free Audit <ExternalLink size={20} className="ml-2" /></a>
-             </Button>
-             <Button asChild variant="outline" size="lg" className="rounded-full h-16 px-10 text-lg font-black" style={{ background: '#25D366', color: '#FFFFFF', borderColor: 'transparent' }}>
-               <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer">WhatsApp Strategy <MessageCircle size={20} className="ml-2" /></a>
-             </Button>
-           </div>
-           
-           <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full border glassmorphism" style={{ color: 'var(--accent-primary)', borderColor: 'var(--border)' }}>
-              <Zap size={16} className="animate-pulse" />
-              <span className="text-sm font-black uppercase tracking-widest">Average response time: Under 2 hours</span>
-           </div>
-        </div>
+    <div className="page-transition min-h-screen pt-20">
+      <div className="flex flex-col lg:flex-row">
+        {/* Left Side: Info Panel */}
+        <div className="lg:w-[40%] bg-gradient-to-br from-accent-primary to-accent-secondary p-12 md:p-24 flex flex-col justify-between relative overflow-hidden text-white min-h-[500px]">
+          {/* Decorative Circles */}
+          <div className="absolute top-[-10%] right-[-10%] w-[400px] h-[400px] rounded-full bg-white opacity-[0.08] blur-3xl pointer-events-none" />
+          <div className="absolute bottom-[20%] left-[-20%] w-[300px] h-[300px] rounded-full bg-black opacity-[0.08] blur-3xl pointer-events-none" />
+          
+          <div className="space-y-12 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="space-y-6"
+            >
+              <h1 className="text-6xl md:text-7xl font-black tracking-tighter leading-none">Let's <br /> Scale.</h1>
+              <p className="text-xl text-white/80 font-medium max-w-md">
+                Ready to stop guessing and start growing? Get in touch for a free growth audit.
+              </p>
+            </motion.div>
 
-        <div className="grid lg:grid-cols-12 gap-20 items-start">
-          {/* Info Side */}
-          <div className="lg:col-span-5 space-y-12">
-            <div className="space-y-8">
-              <h3 className="text-4xl font-black uppercase tracking-tighter" style={{ color: 'var(--text-primary)' }}>New Delhi Headquarters</h3>
-              <div className="space-y-8">
-                <div className="flex items-start gap-6 group cursor-default">
-                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 transition-colors duration-500 glassmorphism" style={{ color: 'var(--accent-primary)' }}>
-                    <MapPin size={28} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-black uppercase tracking-widest mb-1" style={{ color: 'var(--text-muted)' }}>Our Location</p>
-                    <p className="text-xl font-bold leading-snug" style={{ color: 'var(--text-primary)' }}>Plot No. 29 B, Ambedkar Colony, Bijwasan, New Delhi, 110061</p>
-                  </div>
+            <div className="space-y-10">
+              <div className="flex items-start gap-6">
+                <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
+                  <MapPin size={24} />
                 </div>
-                <div className="flex items-start gap-6 group cursor-default">
-                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 transition-colors duration-500 glassmorphism" style={{ color: 'var(--accent-primary)' }}>
-                    <Mail size={28} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-black uppercase tracking-widest mb-1" style={{ color: 'var(--text-muted)' }}>Email Us</p>
-                    <a href="mailto:operation@adzpro.co.in" className="text-xl font-bold transition-colors hover:opacity-80" style={{ color: 'var(--text-primary)' }}>operation@adzpro.co.in</a>
-                  </div>
+                <div className="space-y-1">
+                  <p className="text-[10px] font-black uppercase tracking-widest opacity-60">New Delhi Headquarters</p>
+                  <p className="text-lg font-bold">Plot No. 29 B, Ambedkar Colony, Bijwasan, 110061</p>
                 </div>
-                <div className="flex items-start gap-6 group cursor-default">
-                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 transition-colors duration-500 glassmorphism" style={{ color: 'var(--accent-primary)' }}>
-                    <Clock size={28} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-black uppercase tracking-widest mb-1" style={{ color: 'var(--text-muted)' }}>Office Hours</p>
-                    <p className="text-lg font-bold leading-snug" style={{ color: 'var(--text-primary)' }}>Mon–Sat: 9:00 AM – 7:00 PM IST</p>
-                    <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Sun: By appointment only</p>
-                  </div>
+              </div>
+
+              <div className="flex items-start gap-6">
+                <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
+                  <Mail size={24} />
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[10px] font-black uppercase tracking-widest opacity-60">Email Us</p>
+                  <p className="text-lg font-bold">operation@adzpro.co.in</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-6">
+                <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
+                  <Clock size={24} />
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[10px] font-black uppercase tracking-widest opacity-60">Office Hours</p>
+                  <p className="text-lg font-bold">Mon–Sat: 9 AM – 7 PM IST</p>
+                  <p className="text-xs opacity-60">Sun: By appointment</p>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Google Map Embed */}
-            <div className="relative rounded-[40px] overflow-hidden h-[350px] shadow-2xl border" style={{ borderColor: 'var(--border)' }}>
+          <div className="relative z-10 space-y-8 pt-12">
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/10">
+              <Zap size={16} className="text-white animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-widest">Average response: Under 2h</span>
+            </div>
+
+            <div className="flex gap-6">
+              <a href="https://www.linkedin.com/in/adzpro/" target="_blank" rel="noopener noreferrer" className="hover:scale-125 transition-transform"><Linkedin size={24} /></a>
+              <a href="https://www.instagram.com/adzpro.co.in" target="_blank" rel="noopener noreferrer" className="hover:scale-125 transition-transform"><Instagram size={24} /></a>
+              <a href="https://www.facebook.com/people/Adz-Pro/61564387431825/" target="_blank" rel="noopener noreferrer" className="hover:scale-125 transition-transform"><Facebook size={24} /></a>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side: Form Panel */}
+        <div className="lg:w-[60%] bg-background p-12 md:p-24 flex flex-col justify-center">
+          <div className="max-w-2xl mx-auto w-full">
+            <AnimatePresence mode="wait">
+              {!submitted ? (
+                <motion.div
+                  key="form-container"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="space-y-12"
+                >
+                  <div className="space-y-4">
+                    <h2 className="text-4xl font-black text-text-primary">Send a Strategy Inquiry</h2>
+                    <p className="text-text-secondary">Fill the form below and our team will prepare a custom blueprint for you.</p>
+                  </div>
+
+                  <form onSubmit={handleSubmit} className="space-y-8">
+                    <div className="grid md:grid-cols-2 gap-8">
+                      <div className="floating-label-group">
+                        <input 
+                          id="name" 
+                          placeholder=" "
+                          value={formData.name}
+                          onChange={handleChange}
+                          className={cn(
+                            "w-full h-16 px-4 pt-4 rounded-2xl border bg-surface text-text-primary focus:outline-none transition-all",
+                            errors.name ? "border-danger" : "border-border focus:border-accent-primary"
+                          )}
+                        />
+                        <label className="floating-label">Full Name</label>
+                        {formData.name && !errors.name && <CheckCircle size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-success" />}
+                      </div>
+                      <div className="floating-label-group">
+                        <input 
+                          id="email" 
+                          type="email"
+                          placeholder=" "
+                          value={formData.email}
+                          onChange={handleChange}
+                          className={cn(
+                            "w-full h-16 px-4 pt-4 rounded-2xl border bg-surface text-text-primary focus:outline-none transition-all",
+                            errors.email ? "border-danger" : "border-border focus:border-accent-primary"
+                          )}
+                        />
+                        <label className="floating-label">Email Address</label>
+                        {formData.email && !errors.email && <CheckCircle size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-success" />}
+                      </div>
+                    </div>
+
+                    <div className="floating-label-group">
+                      <input 
+                        id="subject" 
+                        placeholder=" "
+                        value={formData.subject}
+                        onChange={handleChange}
+                        className="w-full h-16 px-4 pt-4 rounded-2xl border bg-surface border-border text-text-primary focus:border-accent-primary focus:outline-none transition-all"
+                      />
+                      <label className="floating-label">Goal / Service</label>
+                    </div>
+
+                    <div className="floating-label-group">
+                      <textarea 
+                        id="message" 
+                        placeholder=" "
+                        value={formData.message}
+                        onChange={handleChange}
+                        className={cn(
+                          "w-full min-h-[160px] px-4 pt-6 rounded-2xl border bg-surface text-text-primary focus:outline-none transition-all",
+                          errors.message ? "border-danger" : "border-border focus:border-accent-primary"
+                        )}
+                      />
+                      <label className="floating-label">Tell us about your brand...</label>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-6">
+                      <Button 
+                        type="submit" 
+                        size="lg" 
+                        disabled={loading} 
+                        className="flex-1 h-20 rounded-2xl text-xl font-black group relative overflow-hidden"
+                        style={{ background: 'var(--accent-primary)', color: '#FFF', boxShadow: '0 0 20px var(--accent-glow)' }}
+                      >
+                        {loading ? <Loader2 className="animate-spin mr-2" /> : <>Send Inquiry <Send size={20} className="ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /></>}
+                      </Button>
+                      
+                      <Button asChild variant="outline" size="lg" className="h-20 px-8 rounded-2xl border-none text-white font-black" style={{ background: '#25D366' }}>
+                        <a href="https://wa.me/91XXXXXXXXXX" target="_blank" rel="noopener noreferrer">
+                          <MessageCircle size={24} className="mr-2" /> WhatsApp
+                        </a>
+                      </Button>
+                    </div>
+                  </form>
+                </motion.div>
+              ) : (
+                <motion.div 
+                  key="success-state"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="text-center space-y-8"
+                >
+                  <div className="relative inline-block">
+                    <motion.div 
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 0.8, ease: "easeOut" }}
+                      className="w-32 h-32 rounded-full border-4 border-success flex items-center justify-center mx-auto"
+                    >
+                      <CheckCircle size={64} className="text-success" />
+                    </motion.div>
+                    {/* Confetti Placeholder Effect */}
+                    {[...Array(10)].map((_, i) => (
+                      <motion.div 
+                        key={i}
+                        initial={{ opacity: 1, y: 0, x: 0 }}
+                        animate={{ opacity: 0, y: (Math.random() - 0.5) * 200, x: (Math.random() - 0.5) * 200 }}
+                        transition={{ duration: 1, delay: 0.5 }}
+                        className="absolute top-1/2 left-1/2 w-2 h-2 rounded-sm"
+                        style={{ background: i % 2 ? 'var(--accent-primary)' : 'var(--success)' }}
+                      />
+                    ))}
+                  </div>
+                  <h3 className="text-5xl font-black text-text-primary">Inquiry Sent.</h3>
+                  <p className="text-xl text-text-secondary">Our strategy team will contact you within 2 hours. Get ready to scale.</p>
+                  <Button onClick={() => setSubmitted(false)} variant="ghost" className="uppercase tracking-widest font-black text-text-muted hover:text-accent-primary">Send another message</Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <div className="mt-20 rounded-3xl overflow-hidden h-[300px] border border-border shadow-strong">
                <iframe 
                 src="https://maps.google.com/maps?q=Bijwasan+New+Delhi&output=embed"
                 width="100%"
@@ -127,119 +257,6 @@ export default function ContactPage() {
                 allowFullScreen={true}
                 loading="lazy"
                />
-            </div>
-          </div>
-
-          {/* Form Side */}
-          <div className="lg:col-span-7">
-            <div className="p-12 md:p-16 rounded-[48px] shadow-2xl relative overflow-hidden glassmorphism">
-              <AnimatePresence mode="wait">
-                {!submitted ? (
-                  <motion.form 
-                    key="form"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    onSubmit={handleSubmit} 
-                    className="space-y-8"
-                  >
-                    <div className="grid md:grid-cols-2 gap-8">
-                      <div className="space-y-3">
-                        <Label htmlFor="name" className="text-xs font-black uppercase tracking-widest" style={{ color: 'var(--text-secondary)' }}>Full Name</Label>
-                        <div className="relative">
-                          <Input 
-                            id="name" 
-                            placeholder="John Doe" 
-                            value={formData.name}
-                            onChange={handleChange}
-                            className={cn("h-14 rounded-2xl border transition-all")}
-                            style={{ 
-                              background: 'var(--surface)', 
-                              borderColor: errors.name ? 'var(--danger)' : 'var(--border)',
-                              color: 'var(--text-primary)'
-                            }}
-                          />
-                          {formData.name && !errors.name && <CheckCircle size={16} className="absolute right-4 top-5" style={{ color: 'var(--success)' }} />}
-                        </div>
-                      </div>
-                      <div className="space-y-3">
-                        <Label htmlFor="email" className="text-xs font-black uppercase tracking-widest" style={{ color: 'var(--text-secondary)' }}>Email Address</Label>
-                        <div className="relative">
-                          <Input 
-                            id="email" 
-                            type="email"
-                            placeholder="john@agency.com" 
-                            value={formData.email}
-                            onChange={handleChange}
-                            className={cn("h-14 rounded-2xl border transition-all")}
-                            style={{ 
-                              background: 'var(--surface)', 
-                              borderColor: errors.email ? 'var(--danger)' : 'var(--border)',
-                              color: 'var(--text-primary)'
-                            }}
-                          />
-                          {formData.email && !errors.email && <CheckCircle size={16} className="absolute right-4 top-5" style={{ color: 'var(--success)' }} />}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="space-y-3">
-                      <Label htmlFor="subject" className="text-xs font-black uppercase tracking-widest" style={{ color: 'var(--text-secondary)' }}>Goal / Service</Label>
-                      <Input 
-                        id="subject" 
-                        placeholder="Scaling Ad Results" 
-                        value={formData.subject}
-                        onChange={handleChange}
-                        className="h-14 rounded-2xl border transition-all"
-                        style={{ background: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}
-                      />
-                    </div>
-                    <div className="space-y-3">
-                      <Label htmlFor="message" className="text-xs font-black uppercase tracking-widest" style={{ color: 'var(--text-secondary)' }}>Message</Label>
-                      <div className="relative">
-                        <Textarea 
-                          id="message" 
-                          placeholder="Tell us about your brand..." 
-                          value={formData.message}
-                          onChange={handleChange}
-                          className={cn("min-h-[160px] rounded-2xl border transition-all")}
-                          style={{ 
-                            background: 'var(--surface)', 
-                            borderColor: errors.message ? 'var(--danger)' : 'var(--border)',
-                            color: 'var(--text-primary)'
-                          }}
-                        />
-                        {formData.message && !errors.message && <CheckCircle size={16} className="absolute right-4 top-5" style={{ color: 'var(--success)' }} />}
-                      </div>
-                    </div>
-                    <Button 
-                      type="submit" 
-                      size="lg" 
-                      disabled={loading} 
-                      className="w-full h-20 rounded-2xl text-xl font-black group"
-                      style={{ background: 'var(--accent-primary)', color: 'var(--text-inverse)', boxShadow: '0 0 20px var(--accent-glow)' }}
-                    >
-                      {loading ? <Loader2 className="animate-spin mr-2" /> : <>Send Strategy Inquiry <Send size={20} className="ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /></>}
-                    </Button>
-                  </motion.form>
-                ) : (
-                  <motion.div 
-                    key="success"
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    className="text-center space-y-8 py-12"
-                  >
-                    <div 
-                      className="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl"
-                      style={{ background: 'var(--accent-light)' }}
-                    >
-                      <CheckCircle size={48} style={{ color: 'var(--accent-primary)' }} />
-                    </div>
-                    <h3 className="text-5xl font-black" style={{ color: 'var(--text-primary)' }}>Message Received.</h3>
-                    <p className="text-xl" style={{ color: 'var(--text-secondary)' }}>Our strategy team will contact you within 2 hours. Get ready to scale.</p>
-                    <Button onClick={() => setSubmitted(false)} variant="ghost" style={{ color: 'var(--text-muted)' }} className="uppercase tracking-widest font-black">Send another message</Button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
           </div>
         </div>

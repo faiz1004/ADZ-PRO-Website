@@ -129,6 +129,36 @@
   }
 }
 
+/* SUPER SMOOTH CONTINUOUS MARQUEE */
+
+.marquee-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: smoothMarquee 28s linear infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes smoothMarquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
 /* Fluid Typography */
 .hero-title {
   font-size: clamp(2.5rem, 10vw, 6rem);

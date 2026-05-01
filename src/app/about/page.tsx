@@ -2,8 +2,9 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Award, Target, Heart, Lightbulb, BarChart, Rocket, ArrowRight, Quote } from 'lucide-react';
+import { Award, Target, Heart, Lightbulb, BarChart, ArrowRight, Quote } from 'lucide-react';
 import Link from 'next/link';
+import { CampaignDashboard } from '@/components/CampaignDashboard';
 
 const SectionDivider = () => (
   <div className="section-divider">
@@ -64,18 +65,7 @@ export default function AboutPage() {
           </motion.div>
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative px-6 md:px-0">
              <div className="absolute inset-0 blur-[60px] md:blur-[120px] rounded-full opacity-10 md:opacity-20 bg-accent-primary" />
-             <div className="relative rounded-[32px] md:rounded-[40px] overflow-hidden p-6 md:p-8 shadow-strong glassmorphism border-border bg-surface-glass/10">
-                <div className="aspect-[4/5] rounded-[24px] md:rounded-[32px] overflow-hidden relative">
-                  <div className="absolute inset-0 hero-mesh opacity-40" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Rocket size={80} className="text-accent-primary animate-float md:size-[120px]" />
-                  </div>
-                </div>
-                <div className="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 p-5 md:p-8 rounded-2xl md:rounded-3xl shadow-strong glassmorphism border-border bg-accent-primary text-white">
-                  <p className="text-2xl md:text-4xl font-black">500+</p>
-                  <p className="text-[8px] md:text-[10px] font-black uppercase tracking-widest opacity-80">Campaigns Scaled</p>
-                </div>
-             </div>
+             <CampaignDashboard />
           </motion.div>
         </div>
 

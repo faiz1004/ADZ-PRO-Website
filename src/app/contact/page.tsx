@@ -2,14 +2,14 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Mail, 
-  MapPin, 
-  Clock, 
-  CheckCircle, 
-  Loader2, 
-  Linkedin, 
-  Instagram, 
+import {
+  Mail,
+  MapPin,
+  Clock,
+  CheckCircle,
+  Loader2,
+  Linkedin,
+  Instagram,
   Facebook
 } from 'lucide-react';
 import { db } from '@/app/lib/firebase';
@@ -41,7 +41,7 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.email || !formData.message) {
       setErrorMessage('Please fill in all required fields.');
       return;
@@ -51,7 +51,7 @@ export default function ContactPage() {
     setErrorMessage('');
 
     // Timeout safety net (increased to 15s to be safe)
-    const timeoutPromise = new Promise((_, reject) => 
+    const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => reject(new Error('Request timeout')), 15000)
     );
 
@@ -63,12 +63,12 @@ export default function ContactPage() {
       });
 
       await Promise.race([submissionPromise, timeoutPromise]);
-      
+
       setStatus('success');
       setFormData({ name: '', email: '', phone: '', service: '', budget: '', message: '' });
     } catch (error) {
       console.error('Contact form error:', error);
-      
+
       // Fallback: local storage backup
       try {
         const key = 'adz_contact_fallback';
@@ -90,12 +90,12 @@ export default function ContactPage() {
   return (
     <div className="page-transition min-h-screen pt-20">
       <div className="flex flex-col lg:flex-row min-h-[calc(100vh-80px)]">
-        
+
         {/* Left Side: Info & Trust Panel */}
         <div className="w-full lg:w-[40%] bg-gradient-to-br from-[#1E8BB5] via-[#0D6A91] to-[#0A5070] p-8 md:p-12 lg:p-16 flex flex-col relative overflow-hidden text-white">
           <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] rounded-full bg-white opacity-[0.05] blur-3xl pointer-events-none" />
           <div className="absolute bottom-[-5%] left-[-5%] w-[200px] h-[200px] rounded-full bg-cyan-400 opacity-[0.08] blur-3xl pointer-events-none" />
-          
+
           <div className="relative z-10 space-y-10">
             <div className="space-y-4">
               <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-none">Let's <br /> Scale.</h1>
@@ -152,10 +152,10 @@ export default function ContactPage() {
 
         {/* Right Side: Form & Map Panel */}
         <div className="flex-1 bg-background p-8 md:p-12 lg:p-16 flex flex-col gap-10">
-          
+
           <AnimatePresence mode="wait">
             {status !== 'success' ? (
-              <motion.div 
+              <motion.div
                 key="form"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -194,7 +194,7 @@ export default function ContactPage() {
                     <option>₹5,00,000+</option>
                   </select>
 
-                  <textarea 
+                  <textarea
                     id="message"
                     placeholder="Tell us about your brand, goals, and current challenges..."
                     rows={4}
@@ -217,7 +217,7 @@ export default function ContactPage() {
                 </form>
               </motion.div>
             ) : (
-              <motion.div 
+              <motion.div
                 key="success"
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -243,14 +243,14 @@ export default function ContactPage() {
             </div>
             <div className="rounded-2xl overflow-hidden border border-border h-[300px] shadow-strong bg-surface relative">
               <iframe
-                src="https://maps.google.com/maps?q=Bijwasan,New+Delhi,110061,India&output=embed&z=15"
+                src="https://maps.google.com/maps?q=106,+Dr.+Ambedkar+Colony,+A+Ambedkar+Colony,+Bijwasan,+New+Delhi,+Delhi,+110061,+India&output=embed&z=15"
                 width="100%"
                 height="100%"
                 style={{ border: 0, display: 'block', width: '100%', height: '100%' }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Adz Pro - Bijwasan, New Delhi"
+                title="Adz Pro - 106, Dr. Ambedkar Colony, Bijwasan, New Delhi"
               />
             </div>
             <p className="text-[10px] text-text-muted font-medium">Plot No. 29 B, Ambedkar Colony, Bijwasan, New Delhi 110061</p>

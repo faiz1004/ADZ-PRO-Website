@@ -3,37 +3,106 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ArrowUpRight, CheckCircle, Quote, ShoppingCart, Home, GraduationCap, ShoppingBag } from 'lucide-react';
+import { ArrowUpRight, CheckCircle, Quote } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
 
 const CaseStudyGraphic = ({ type }: { type: string }) => {
-  const graphics = {
-    "E-Commerce": {
-      gradient: "linear-gradient(135deg, #1E8BB5, #0a1628)",
-      icon: <ShoppingCart className="w-12 h-12 md:w-16 md:h-16 text-white opacity-20" />
-    },
-    "Branding": {
-      gradient: "linear-gradient(135deg, #0D6A91, #1a2a4a)",
-      icon: <Home className="w-12 h-12 md:w-16 md:h-16 text-white opacity-20" />
-    },
-    "Social Media": {
-      gradient: "linear-gradient(135deg, #2BA8D8, #070e1a)",
-      icon: <GraduationCap className="w-12 h-12 md:w-16 md:h-16 text-white opacity-20" />
-    },
-    "Performance Ads": {
-      gradient: "linear-gradient(135deg, #1E8BB5, #6B21A8)",
-      icon: <ShoppingBag className="w-12 h-12 md:w-16 md:h-16 text-white opacity-20" />
-    }
-  };
-  const g = graphics[type as keyof typeof graphics] || graphics["E-Commerce"];
-  
-  return (
-    <div className="w-full h-full flex items-center justify-center relative overflow-hidden" style={{ background: g.gradient }}>
-      <div className="absolute inset-0 dot-pattern opacity-10" />
-      {g.icon}
-    </div>
-  );
+  switch (type) {
+    case "E-Commerce":
+      return (
+        <div style={{
+          width: '100%', height: '100%',
+          background: 'linear-gradient(135deg, #1E8BB5 0%, #0a1628 100%)',
+          position: 'relative', overflow: 'hidden',
+          display: 'flex', flexDirection: 'column',
+          justifyContent: 'flex-end', padding: '20px',
+        }}>
+          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+          <div style={{ position: 'absolute', top: '20px', left: '20px', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '12px', padding: '10px 14px', fontSize: '11px', color: 'white' }}>
+            <div style={{ opacity: 0.6, fontSize: '9px', letterSpacing: '0.1em' }}>REVENUE</div>
+            <div style={{ fontWeight: 800, fontSize: '18px', color: '#4ADE80' }}>₹48.2L</div>
+            <div style={{ fontSize: '9px', color: '#4ADE80' }}>↑ 200%</div>
+          </div>
+          <div style={{ position: 'absolute', top: '20px', right: '20px', background: 'rgba(30,139,181,0.8)', borderRadius: '8px', padding: '6px 12px', fontSize: '11px', color: 'white', fontWeight: 700 }}>4.2x ROAS</div>
+          <div style={{ position: 'absolute', bottom: '70px', left: '20px', right: '20px', display: 'flex', alignItems: 'flex-end', gap: '6px', height: '60px' }}>
+            {[30,50,40,70,85,95,80].map((h, i) => (
+              <div key={i} style={{ flex: 1, height: `${h}%`, background: i === 5 ? 'rgba(74,222,128,0.8)' : 'rgba(255,255,255,0.2)', borderRadius: '3px 3px 0 0' }} />
+            ))}
+          </div>
+          <div style={{ position: 'relative', zIndex: 2, fontSize: '10px', color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em' }}>E-COMMERCE · PERFORMANCE ADS</div>
+        </div>
+      );
+    case "Branding":
+      return (
+        <div style={{
+          width: '100%', height: '100%',
+          background: 'linear-gradient(135deg, #0A1628 0%, #1E3A5F 100%)',
+          position: 'relative', overflow: 'hidden',
+          display: 'flex', flexDirection: 'column',
+          justifyContent: 'flex-end', padding: '20px',
+        }}>
+          {[
+            { color: '#1E8BB5', top: '20px', left: '20px', size: 40 },
+            { color: '#2BA8D8', top: '20px', left: '64px', size: 40 },
+            { color: '#0D6A91', top: '20px', left: '108px', size: 40 },
+            { color: '#10B981', top: '20px', left: '152px', size: 40 },
+          ].map((c, i) => (
+            <div key={i} style={{ position: 'absolute', top: c.top, left: c.left, width: `${c.size}px`, height: `${c.size}px`, borderRadius: '50%', background: c.color, border: '2px solid rgba(255,255,255,0.2)' }} />
+          ))}
+          <div style={{ position: 'absolute', top: '80px', left: '20px', background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '12px', padding: '10px 14px' }}>
+            <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.6)', letterSpacing: '0.1em' }}>BRAND RECALL</div>
+            <div style={{ fontSize: '22px', fontWeight: 800, color: 'white' }}>+73%</div>
+          </div>
+          <div style={{ position: 'relative', zIndex: 2, fontSize: '10px', color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em' }}>BRANDING · VISUAL IDENTITY</div>
+        </div>
+      );
+    case "Social Media":
+      return (
+        <div style={{
+          width: '100%', height: '100%',
+          background: 'linear-gradient(135deg, #2BA8D8 0%, #070E1A 100%)',
+          position: 'relative', overflow: 'hidden',
+          display: 'flex', flexDirection: 'column',
+          justifyContent: 'flex-end', padding: '20px',
+        }}>
+          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+          <div style={{ position: 'absolute', top: '16px', left: '16px', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '12px', padding: '10px 14px' }}>
+            <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.6)', letterSpacing: '0.1em' }}>FOLLOWERS</div>
+            <div style={{ fontSize: '22px', fontWeight: 800, color: 'white' }}>85K+</div>
+            <div style={{ fontSize: '9px', color: '#4ADE80' }}>↑ 5x Growth</div>
+          </div>
+          <div style={{ position: 'absolute', top: '16px', right: '16px', background: 'rgba(30,139,181,0.7)', borderRadius: '8px', padding: '6px 12px', fontSize: '11px', color: 'white', fontWeight: 700 }}>8.4% Eng.</div>
+          <svg style={{ position: 'absolute', bottom: '60px', left: '16px', right: '16px', width: 'calc(100% - 32px)', height: '50px' }} viewBox="0 0 200 50" preserveAspectRatio="none">
+            <polyline points="0,45 30,38 60,30 90,20 120,15 150,8 180,4 200,2" fill="none" stroke="rgba(74,222,128,0.7)" strokeWidth="2" strokeLinecap="round" />
+            <defs><linearGradient id="greenGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#4ADE80" /><stop offset="100%" stopColor="transparent" /></linearGradient></defs>
+          </svg>
+          <div style={{ position: 'relative', zIndex: 2, fontSize: '10px', color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em' }}>SOCIAL MEDIA · CONTENT GROWTH</div>
+        </div>
+      );
+    case "Performance Ads":
+      return (
+        <div style={{
+          width: '100%', height: '100%',
+          background: 'linear-gradient(135deg, #1E8BB5 0%, #6B21A8 100%)',
+          position: 'relative', overflow: 'hidden',
+          display: 'flex', flexDirection: 'column',
+          justifyContent: 'flex-end', padding: '20px',
+        }}>
+          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+          <div style={{ position: 'absolute', top: '16px', left: '16px', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '12px', padding: '10px 14px' }}>
+            <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.6)', letterSpacing: '0.1em' }}>ROAS</div>
+            <div style={{ fontSize: '22px', fontWeight: 800, color: 'white' }}>6.1x</div>
+            <div style={{ fontSize: '9px', color: '#4ADE80' }}>Zero Waste Budget</div>
+          </div>
+          {[80, 120, 160].map((size, i) => (
+            <div key={i} style={{ position: 'absolute', top: '50%', right: '-20px', width: `${size}px`, height: `${size}px`, marginTop: `-${size/2}px`, border: `1px solid rgba(255,255,255,${0.08 - i*0.02})`, borderRadius: '50%' }} />
+          ))}
+          <div style={{ position: 'relative', zIndex: 2, fontSize: '10px', color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em' }}>PERFORMANCE ADS · ROI FOCUS</div>
+        </div>
+      );
+    default: return <div className="w-full h-full bg-accent-light" />;
+  }
 };
 
 export default function PortfolioPage() {

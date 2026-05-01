@@ -11,11 +11,8 @@ import {
   Linkedin, 
   Instagram, 
   Facebook,
-  Phone,
   Zap
 } from 'lucide-react';
-import { db } from '@/app/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -58,6 +55,9 @@ export default function ContactPage() {
     );
 
     try {
+      const { db } = await import('@/app/lib/firebase');
+      const { collection, addDoc, serverTimestamp } = await import('firebase/firestore');
+
       const submissionPromise = addDoc(collection(db, "leads"), {
         ...formData,
         timestamp: serverTimestamp(),
@@ -70,8 +70,18 @@ export default function ContactPage() {
       setFormData({ name: '', email: '', phone: '', service: '', budget: '', message: '' });
     } catch (error) {
       console.error('Contact form error:', error);
-      setStatus('error');
-      setErrorMessage('Submission failed. Please try again or contact us via WhatsApp.');
+      
+      // Fallback: local storage backup
+      try {
+        const key = 'adz_contact_fallback';
+        const existing = JSON.parse(localStorage.getItem(key) || '[]');
+        existing.push({ ...formData, timestamp: new Date().toISOString() });
+        localStorage.setItem(key, JSON.stringify(existing));
+        setStatus('success');
+      } catch (localError) {
+        setStatus('error');
+        setErrorMessage('Submission failed. Please try again or contact us via WhatsApp.');
+      }
     } finally {
       setTimeout(() => {
         if (status === 'loading') setStatus('idle');

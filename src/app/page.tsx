@@ -228,20 +228,19 @@ export default function Home() {
           background: 'var(--ticker-bg)',
           borderTop: '1px solid var(--border)',
           borderBottom: '1px solid var(--border)',
-          padding: '14px 0',
+          padding: '16px 0',
           position: 'relative',
           zIndex: 5
         }}
       >
         <div
-          className="marquee-track"
+          data-marquee
           style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            width: 'fit-content',
+            display: 'inline-flex',
+            width: 'max-content',
             whiteSpace: 'nowrap',
-            gap: '0px'
+            animation: 'marqueeScroll 30s linear infinite',
+            willChange: 'transform',
           }}
         >
           {[...tickerItems, ...tickerItems].map((item, index) => (

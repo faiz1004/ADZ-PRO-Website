@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowUpRight, CheckCircle, Quote, ShoppingCart, Home, GraduationCap, ShoppingBag } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { cn } from '@/lib/utils';
 
 const CaseStudyGraphic = ({ type }: { type: string }) => {
   const graphics = {

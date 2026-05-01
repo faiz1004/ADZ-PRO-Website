@@ -14,6 +14,9 @@ export function CustomCursor() {
   const springY = useSpring(cursorY, { stiffness: 500, damping: 28 });
 
   useEffect(() => {
+    // Disable on mobile/touch devices
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
@@ -36,11 +39,12 @@ export function CustomCursor() {
     };
   }, [cursorX, cursorY, isVisible]);
 
-  if (typeof window !== 'undefined' && window.innerWidth < 768) return null;
+  // Don't render on mobile or if hidden
+  if (typeof window !== 'undefined' && (window.innerWidth < 768 || 'ontouchstart' in window)) return null;
 
   return (
     <motion.div
-      className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-[10000] border-2 border-accent-primary mix-blend-screen"
+      className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-[10000] border-2 border-accent-primary mix-blend-screen hidden lg:block"
       style={{
         x: springX,
         y: springY,

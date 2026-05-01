@@ -1,10 +1,12 @@
-
 "use client"
 
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from 'next-themes';
 
 export default function ParticleBackground() {
+  const { resolvedTheme } = useTheme();
+  
   const particles = useMemo(() => {
     return Array.from({ length: 30 }, (_, i) => ({
       id: i,
@@ -16,8 +18,10 @@ export default function ParticleBackground() {
     }));
   }, []);
 
+  const isDark = resolvedTheme === 'dark';
+
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none opacity-20 dark:opacity-40">
+    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
       {particles.map((p) => (
         <motion.div
           key={p.id}
@@ -31,7 +35,11 @@ export default function ParticleBackground() {
             repeat: Infinity, 
             ease: "linear" 
           }}
-          className="absolute w-1.5 h-1.5 bg-foreground rounded-full blur-[1px]"
+          className="absolute w-1.5 h-1.5 rounded-full blur-[1px]"
+          style={{ 
+            backgroundColor: isDark ? 'rgba(255,255,255,0.1)' : 'var(--accent-primary)',
+            opacity: isDark ? 1 : 0.15
+          }}
         />
       ))}
     </div>

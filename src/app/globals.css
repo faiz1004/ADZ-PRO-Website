@@ -1,70 +1,115 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 211 50% 10%;
-    --card: 0 0% 98%;
-    --card-foreground: 211 50% 10%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 211 50% 10%;
-    --primary: 197 71% 41%; /* #1E8BB5 derived from logo */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 211 10% 95%;
-    --secondary-foreground: 211 50% 10%;
-    --muted: 211 10% 95%;
-    --muted-foreground: 211 10% 40%;
-    --accent: 173 83% 45%;
-    --accent-foreground: 211 50% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 211 15% 90%;
-    --input: 211 15% 90%;
-    --ring: 197 71% 41%;
-    --radius: 1rem;
-  }
+:root {
+  /* LIGHT MODE */
+  --background:        #F0F7FB;
+  --background-secondary: #E1EFF7;
+  --surface:           #FFFFFF;
+  --surface-glass:     rgba(255, 255, 255, 0.70);
+  --border:            rgba(30, 139, 181, 0.20);
+  --border-glass:      rgba(30, 139, 181, 0.15);
 
-  .dark {
-    --background: 211 20% 10%;
-    --foreground: 0 0% 100%;
-    --card: 211 25% 12%;
-    --card-foreground: 0 0% 100%;
-    --popover: 211 20% 8%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 197 71% 41%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 211 15% 20%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 211 10% 20%;
-    --muted-foreground: 211 10% 70%;
-    --accent: 173 83% 60%;
-    --accent-foreground: 211 20% 10%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 211 15% 20%;
-    --input: 211 15% 20%;
-    --ring: 197 71% 41%;
-  }
+  --text-primary:      #0A1628;
+  --text-secondary:    #2C4A6E;
+  --text-muted:        #5A7A9A;
+  --text-inverse:      #FFFFFF;
+
+  --accent-primary:    #1E8BB5;
+  --accent-secondary:  #0D6A91;
+  --accent-glow:       rgba(30, 139, 181, 0.25);
+  --accent-light:      rgba(30, 139, 181, 0.10);
+
+  --success:           #10B981;
+  --danger:            #EF4444;
+
+  --navbar-bg:         rgba(240, 247, 251, 0.85);
+  --card-bg:           rgba(255, 255, 255, 0.80);
+  --hero-gradient:     linear-gradient(135deg, #F0F7FB 0%, #E1EFF7 50%, #D0E8F5 100%);
+  --section-alt:       #E8F4FA;
+  --ticker-bg:         rgba(30, 139, 181, 0.08);
+  --shadow:            0 4px 24px rgba(30, 139, 181, 0.12);
+  --shadow-strong:     0 8px 40px rgba(30, 139, 181, 0.20);
+
+  --radius: 1rem;
+}
+
+.dark {
+  /* DARK MODE */
+  --background:        #070E1A;
+  --background-secondary: #0A1628;
+  --surface:           #0F1E35;
+  --surface-glass:     rgba(15, 30, 53, 0.75);
+  --border:            rgba(30, 139, 181, 0.20);
+  --border-glass:      rgba(30, 139, 181, 0.12);
+
+  --text-primary:      #F0F7FB;
+  --text-secondary:    #A8C8E0;
+  --text-muted:        #6A8FAA;
+  --text-inverse:      #0A1628;
+
+  --accent-primary:    #1E8BB5;
+  --accent-secondary:  #2BA8D8;
+  --accent-glow:       rgba(30, 139, 181, 0.35);
+  --accent-light:      rgba(30, 139, 181, 0.12);
+
+  --success:           #10B981;
+  --danger:            #EF4444;
+
+  --navbar-bg:         rgba(7, 14, 26, 0.85);
+  --card-bg:           rgba(15, 30, 53, 0.80);
+  --hero-gradient:     linear-gradient(135deg, #070E1A 0%, #0A1628 50%, #0F1E35 100%);
+  --section-alt:       #0A1628;
+  --ticker-bg:         rgba(30, 139, 181, 0.10);
+  --shadow:            0 4px 24px rgba(0, 0, 0, 0.40);
+  --shadow-strong:     0 8px 40px rgba(0, 0, 0, 0.60);
 }
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: var(--border);
   }
+  
+  *, *::before, *::after {
+    transition: 
+      background-color 0.3s ease,
+      border-color 0.3s ease,
+      color 0.2s ease,
+      box-shadow 0.3s ease !important;
+  }
+
+  /* Exception — don't slow down transforms or opacity fades in animations */
+  [class*="motion"], [class*="animate"], .page-transition {
+    transition: transform 0.4s ease, opacity 0.4s ease !important;
+  }
+
   body {
-    @apply bg-background text-foreground font-body antialiased selection:bg-primary/30;
+    background-color: var(--background);
+    color: var(--text-primary);
+    @apply font-body antialiased;
+  }
+
+  ::selection {
+    background-color: var(--accent-glow);
+    color: var(--text-primary);
   }
 }
 
 .glassmorphism {
-  @apply bg-background/50 backdrop-blur-md border border-foreground/10;
+  background: var(--card-bg);
+  border: 1px solid var(--border-glass);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow);
+}
+
+.glassmorphism:hover {
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-strong);
 }
 
 .text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_auto] animate-shimmer;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-primary via-accent-secondary to-accent-primary bg-[length:200%_auto] animate-shimmer;
 }
 
 @keyframes shimmer {
@@ -84,23 +129,22 @@
   animation: marquee 30s linear infinite;
 }
 
-.mesh-gradient {
-  background-color: hsl(var(--background));
-  background-image: 
-    radial-gradient(at 0% 0%, hsla(197, 71%, 41%, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, hsla(173, 83%, 60%, 0.08) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, hsla(197, 71%, 41%, 0.05) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, hsla(173, 83%, 60%, 0.05) 0px, transparent 50%);
-}
-
 .page-transition {
   @apply animate-in fade-in slide-in-from-bottom-4 duration-700;
 }
 
-.hover-glow:hover {
-  box-shadow: 0 0 20px hsla(197, 71%, 41%, 0.2);
+.active-nav-link {
+  color: var(--accent-primary) !important;
+  position: relative;
 }
 
-.active-nav-link {
-  @apply text-primary relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary after:rounded-full after:animate-in after:slide-in-from-left-2;
+.active-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--accent-primary);
+  border-radius: 99px;
 }

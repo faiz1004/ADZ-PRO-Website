@@ -2,9 +2,17 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { TrendingUp, ShieldCheck, Palette, Globe, ArrowRight, CheckCircle2, BarChart3, Target, CheckCircle, Sparkles } from 'lucide-react';
+import { 
+  Globe, 
+  ArrowRight, 
+  BarChart3, 
+  Target, 
+  Sparkles, 
+  Check 
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 const ServiceIcon = ({ type, hover }: { type: string, hover: boolean }) => {
   switch (type) {
@@ -215,5 +223,3 @@ export default function ServicesPage() {
     </div>
   );
 }
-
-import { cn } from '@/lib/utils';

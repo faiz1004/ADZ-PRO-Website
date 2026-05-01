@@ -50,7 +50,7 @@ export default function RootLayout({
     "image": "https://adzpro.co.in/logo.png",
     "@id": "",
     "url": "https://adzpro.co.in",
-    "telephone": "+91XXXXXXXXXX",
+    "telephone": "+918278221944",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Plot No. 29 B, Ambedkar Colony, Bijwasan",

@@ -29,7 +29,7 @@ export function FloatingElements() {
     <>
       {/* WhatsApp Button */}
       <motion.a 
-        href="https://wa.me/91XXXXXXXXXX"
+        href="https://wa.me/918278221944"
         target="_blank"
         rel="noopener noreferrer"
         initial={{ scale: 0 }}

@@ -31,34 +31,42 @@ export function Navbar() {
   ];
 
   return (
-    <nav 
+    <nav
       className={cn(
         "fixed top-0 left-0 right-0 z-[100] transition-all duration-500",
-        isScrolled 
-          ? "py-3 shadow-2xl border-b border-border" 
+        isScrolled
+          ? "py-3 shadow-2xl border-b border-border"
           : "py-6 bg-transparent"
       )}
-      style={{ 
+      style={{
         backgroundColor: isScrolled ? 'var(--navbar-bg)' : 'transparent',
         backdropFilter: isScrolled ? 'blur(20px)' : 'none',
       }}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
-          <motion.div 
+          <motion.div
             animate={{ scale: isScrolled ? 0.9 : 1 }}
             whileHover={{ rotate: 15, scale: 1.1 }}
-            className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg"
-            style={{ 
+            className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg overflow-hidden"
+            style={{
               background: 'var(--accent-primary)',
               boxShadow: '0 4px 12px var(--accent-glow)'
             }}
           >
-            <Rocket className="text-white w-5 h-5" />
+            <img
+              src="/Adz-Logo.png"
+              alt="ADZ PRO Logo"
+              className="w-6 h-6 object-contain"
+            />
           </motion.div>
-          <span 
+
+          <span
             className="text-2xl font-black tracking-tighter transition-all"
-            style={{ color: 'var(--text-primary)', transform: isScrolled ? 'scale(0.95)' : 'scale(1)' }}
+            style={{
+              color: 'var(--text-primary)',
+              transform: isScrolled ? 'scale(0.95)' : 'scale(1)'
+            }}
           >
             ADZ PRO
           </span>
@@ -68,8 +76,8 @@ export function Navbar() {
         <div className="hidden lg:flex items-center gap-8">
           <div className="flex items-center gap-8 relative">
             {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
+              <Link
+                key={link.name}
                 href={link.href}
                 className={cn(
                   "text-sm font-bold transition-all duration-300 uppercase tracking-wider relative py-2",
@@ -86,7 +94,7 @@ export function Navbar() {
               </Link>
             ))}
           </div>
-          
+
           <div className="flex items-center gap-6 border-l border-border pl-8">
             <div className="flex items-center gap-4">
               <a href="https://www.linkedin.com/in/adzpro/" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-accent-primary transition-colors">
@@ -109,7 +117,7 @@ export function Navbar() {
         {/* Mobile Toggle */}
         <div className="lg:hidden flex items-center gap-4">
           <ThemeToggle />
-          <button 
+          <button
             className="p-2"
             style={{ color: 'var(--text-primary)' }}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -122,7 +130,7 @@ export function Navbar() {
       {/* Mobile Menu Drawer */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
@@ -136,11 +144,11 @@ export function Navbar() {
                 <X size={32} />
               </button>
             </div>
-            
+
             <div className="flex flex-col gap-6">
               {navLinks.map((link) => (
-                <Link 
-                  key={link.name} 
+                <Link
+                  key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(

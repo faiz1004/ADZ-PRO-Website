@@ -206,7 +206,7 @@ export default function ContactPage() {
                       </Button>
                       
                       <Button asChild variant="outline" size="lg" className="h-20 px-8 rounded-2xl border-none text-white font-black" style={{ background: '#25D366' }}>
-                        <a href="https://wa.me/91XXXXXXXXXX" target="_blank" rel="noopener noreferrer">
+                        <a href="https://wa.me/918278221944" target="_blank" rel="noopener noreferrer">
                           <MessageCircle size={24} className="mr-2" /> WhatsApp
                         </a>
                       </Button>

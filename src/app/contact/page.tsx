@@ -10,9 +10,10 @@ import {
   Loader2, 
   Linkedin, 
   Instagram, 
-  Facebook,
-  Zap
+  Facebook
 } from 'lucide-react';
+import { db } from '@/app/lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -49,19 +50,16 @@ export default function ContactPage() {
     setStatus('loading');
     setErrorMessage('');
 
-    // Timeout safety net
+    // Timeout safety net (increased to 15s to be safe)
     const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Request timeout')), 10000)
+      setTimeout(() => reject(new Error('Request timeout')), 15000)
     );
 
     try {
-      const { db } = await import('@/app/lib/firebase');
-      const { collection, addDoc, serverTimestamp } = await import('firebase/firestore');
-
       const submissionPromise = addDoc(collection(db, "leads"), {
         ...formData,
         timestamp: serverTimestamp(),
-        source: "website_contact_v3"
+        source: "website_contact_v4"
       });
 
       await Promise.race([submissionPromise, timeoutPromise]);
@@ -82,10 +80,6 @@ export default function ContactPage() {
         setStatus('error');
         setErrorMessage('Submission failed. Please try again or contact us via WhatsApp.');
       }
-    } finally {
-      setTimeout(() => {
-        if (status === 'loading') setStatus('idle');
-      }, 3000);
     }
   };
 
@@ -99,7 +93,6 @@ export default function ContactPage() {
         
         {/* Left Side: Info & Trust Panel */}
         <div className="w-full lg:w-[40%] bg-gradient-to-br from-[#1E8BB5] via-[#0D6A91] to-[#0A5070] p-8 md:p-12 lg:p-16 flex flex-col relative overflow-hidden text-white">
-          {/* Decorative Orbs */}
           <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] rounded-full bg-white opacity-[0.05] blur-3xl pointer-events-none" />
           <div className="absolute bottom-[-5%] left-[-5%] w-[200px] h-[200px] rounded-full bg-cyan-400 opacity-[0.08] blur-3xl pointer-events-none" />
           
@@ -111,7 +104,6 @@ export default function ContactPage() {
               </p>
             </div>
 
-            {/* Contact Details */}
             <div className="space-y-6">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
@@ -133,7 +125,6 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* What to expect section */}
             <div className="pt-6 border-t border-white/10">
               <p className="text-[10px] font-bold tracking-[0.2em] text-white/50 uppercase mb-6">What Happens Next?</p>
               <div className="space-y-5">
@@ -149,20 +140,6 @@ export default function ContactPage() {
                   </div>
                 ))}
               </div>
-            </div>
-
-            {/* Trust badges */}
-            <div className="grid grid-cols-2 gap-3 pt-6">
-              {[
-                '🔒 100% Confidential',
-                '⚡ 48hr Launch',
-                '📊 Free Audit',
-                '🏆 500+ Scaled',
-              ].map((badge) => (
-                <div key={badge} className="px-3 py-2 bg-white/10 border border-white/10 rounded-lg text-[10px] font-bold text-white/90">
-                  {badge}
-                </div>
-              ))}
             </div>
 
             <div className="flex gap-6 pt-6">
@@ -237,11 +214,6 @@ export default function ContactPage() {
                   </div>
 
                   {status === 'error' && <p className="text-danger text-xs font-bold">{errorMessage}</p>}
-
-                  <div className="flex items-center gap-3 p-3 bg-accent-light border border-border rounded-xl">
-                    <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
-                    <span className="text-[10px] font-bold text-accent-primary uppercase tracking-wider">⚡ Average response time: Under 2 hours</span>
-                  </div>
                 </form>
               </motion.div>
             ) : (
@@ -256,7 +228,7 @@ export default function ContactPage() {
                 </div>
                 <div className="space-y-2">
                   <h3 className="text-3xl font-black text-text-primary">Sent Successfully!</h3>
-                  <p className="text-text-secondary">We've received your inquiry. Check your email soon.</p>
+                  <p className="text-text-secondary">We've received your inquiry. Our team will contact you shortly.</p>
                 </div>
                 <button onClick={() => setStatus('idle')} className="text-accent-primary font-bold uppercase tracking-widest text-xs py-2 px-4 hover:bg-accent-light rounded-lg transition-colors">Send Another</button>
               </motion.div>
@@ -269,12 +241,12 @@ export default function ContactPage() {
               <MapPin size={14} className="text-accent-primary" />
               <p className="text-[10px] font-black uppercase tracking-[0.2em] text-text-muted">Our Location</p>
             </div>
-            <div className="rounded-2xl overflow-hidden border border-border h-[240px] shadow-strong bg-surface relative">
+            <div className="rounded-2xl overflow-hidden border border-border h-[300px] shadow-strong bg-surface relative">
               <iframe
                 src="https://maps.google.com/maps?q=Bijwasan,New+Delhi,110061,India&output=embed&z=15"
                 width="100%"
                 height="100%"
-                style={{ border: 0, display: 'block' }}
+                style={{ border: 0, display: 'block', width: '100%', height: '100%' }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
